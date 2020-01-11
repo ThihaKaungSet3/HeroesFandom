@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/actionHome">
+
+    <fragment
+        android:id="@+id/actionHome"
+        android:name="non.shahad.heroesfandom.ui.home.HomeFragment"
+        android:label="@string/home"
+        tools:layout="@layout/fragment_home" >
+
+        <argument
+            android:name="title"
+            android:defaultValue="@string/home"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/actionMovies"
+        android:name="non.shahad.heroesfandom.ui.movies.MoviesFragment"
+        android:label="@string/movies"
+        tools:layout="@layout/fragment_movies" >
+
+        <argument
+            android:name="title"
+            android:defaultValue="@string/movies"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/actionHeroes"
+        android:name="non.shahad.heroesfandom.ui.heroes.HeroesFragment"
+        android:label="@string/heroes"
+        tools:layout="@layout/fragment_heroes" >
+
+        <argument
+            android:name="title"
+            android:defaultValue="@string/heroes"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/actionSetting"
+        android:name="non.shahad.heroesfandom.ui.setting.SettingFragment"
+        android:label="@string/setting"
+        tools:layout="@layout/fragment_setting" >
+
+        <argument
+            android:name="title"
+            android:defaultValue="@string/setting"/>
+
+    </fragment>
+
+</navigation>

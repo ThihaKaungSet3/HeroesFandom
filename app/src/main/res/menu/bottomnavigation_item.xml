@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/actionHome"
+        android:title="@string/home"
+        android:icon="@drawable/ic_inventory"/>
+
+    <item
+        android:id="@+id/actionMovies"
+        android:title="@string/movies"
+        android:icon="@drawable/ic_movies"/>
+
+    <item
+        android:id="@+id/actionHeroes"
+        android:title="@string/heroes"
+        android:icon="@drawable/ic_character"/>
+
+    <item
+        android:id="@+id/actionSetting"
+        android:title="@string/setting"
+        android:icon="@drawable/ic_setting"/>
+
+</menu>
