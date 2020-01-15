@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#363333</color>
-    <color name="colorPrimaryDark">#272121</color>
-    <color name="colorAccent">#D81B60</color>
-    <color name="selected_color">#e16428</color>
-    <color name="not_selected_gray_color">#bbbbbb</color>
+    <color name="colorPrimary">#fcf9f9</color>
+    <color name="colorPrimaryDark">#7cbd1e</color>
+    <color name="colorAccent">#fcf9f9</color>
+    <color name="selected_color">#7cbd1e</color>
+    <color name="not_selected_gray_color">#838383</color>
+    <color name="black">#000000</color>
+    <color name="default_colorpalette">#7cbd1e</color>
+    <color name="heroes_detail_text">#000000</color>
 </resources>

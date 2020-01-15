@@ -8,6 +8,7 @@ import dagger.multibindings.IntoMap
 import non.shahad.heroesfandom.di.ViewModelFactory
 import non.shahad.heroesfandom.di.ViewmodelKey
 import non.shahad.heroesfandom.ui.heroes.HeroesViewModel
+import non.shahad.heroesfandom.ui.movies.MoviesViewModel
 
 @Module
 abstract class ViewModelModules {
@@ -17,6 +18,11 @@ abstract class ViewModelModules {
     @IntoMap
     @Binds
     @ViewmodelKey(HeroesViewModel::class)
-    abstract fun provideSplashFragmentViewModel(heroesViewModel: HeroesViewModel): ViewModel
+    abstract fun provideHeroesViewModel(heroesViewModel: HeroesViewModel): ViewModel
+
+    @IntoMap
+    @Binds
+    @ViewmodelKey(MoviesViewModel::class)
+    abstract fun provideMoviesViewModel(heroesViewModel: MoviesViewModel): ViewModel
 
 }

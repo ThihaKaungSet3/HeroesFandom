@@ -6,7 +6,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
     tools:context=".ui.MainActivity">
 
 
@@ -25,7 +24,7 @@
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorAccent"
         android:itemBackground="@drawable/bottom_navigation_theme"
         app:itemIconTint="@color/bottomnavigation_color_selector"
         app:itemTextColor="@color/bottomnavigation_color_selector"

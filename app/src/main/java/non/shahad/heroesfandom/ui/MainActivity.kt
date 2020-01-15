@@ -26,6 +26,7 @@ class MainActivity : BaseActivity(),HasAndroidInjector {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        changeStatusBarColor(R.color.black)
         viewBinding = DataBindingUtil.setContentView(this,
             R.layout.activity_main
         )

@@ -6,6 +6,7 @@ import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import non.shahad.heroesfandom.core.Constants
+import non.shahad.heroesfandom.data.local.daos.MoviesDao
 import non.shahad.heroesfandom.data.local.daos.SuperHeroDao
 import non.shahad.heroesfandom.data.local.database.HeroesDatabase
 import javax.inject.Singleton
@@ -27,6 +28,10 @@ class PersistenceModule{
     @Singleton
     @Provides
     fun provideSuperHeroDao(db: HeroesDatabase) : SuperHeroDao = db.superHeroDao()
+
+    @Singleton
+    @Provides
+    fun provideMoviesDao(db : HeroesDatabase) : MoviesDao = db.moviesDao()
 
 
 }

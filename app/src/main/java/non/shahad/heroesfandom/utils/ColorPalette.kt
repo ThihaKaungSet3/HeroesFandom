@@ -11,5 +11,4 @@ object ColorPalette{
 
         return palette.getDarkVibrantColor(default)!!
     }
-
 }
