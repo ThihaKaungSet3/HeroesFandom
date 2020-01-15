@@ -9,11 +9,13 @@ import android.view.ViewGroup
 
 import non.shahad.heroesfandom.R
 import non.shahad.heroesfandom.core.BaseFragment
+import non.shahad.heroesfandom.di.Injectable
+import javax.inject.Inject
 
 /**
  * A simple [Fragment] subclass.
  */
-class HomeFragment : BaseFragment() {
+class HomeFragment : BaseFragment(),Injectable {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

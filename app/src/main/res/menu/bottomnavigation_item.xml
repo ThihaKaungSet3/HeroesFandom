@@ -16,8 +16,8 @@
         android:icon="@drawable/ic_character"/>
 
     <item
-        android:id="@+id/actionSetting"
-        android:title="@string/setting"
-        android:icon="@drawable/ic_setting"/>
+        android:id="@+id/actionLibrary"
+        android:title="@string/library"
+        android:icon="@drawable/ic_saved"/>
 
 </menu>

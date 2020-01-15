@@ -1,5 +1,6 @@
 package non.shahad.heroesfandom.di.modules
 
+import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import dagger.Module
@@ -14,10 +15,11 @@ class PersistenceModule{
 
     @Singleton
     @Provides
-    fun provideRoomDatabase(context: Context) : HeroesDatabase {
+    fun provideRoomDatabase(application : Application) : HeroesDatabase {
         return Room
-            .databaseBuilder(context
+            .databaseBuilder(application
                 ,HeroesDatabase::class.java,Constants.Persistence.DATABASE_NAME)
+            .fallbackToDestructiveMigration()
             .build()
     }
 

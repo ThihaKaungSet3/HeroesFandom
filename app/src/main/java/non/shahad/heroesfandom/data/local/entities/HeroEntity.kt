@@ -1,20 +1,24 @@
 package non.shahad.heroesfandom.data.local.entities
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.android.parcel.Parcelize
+import non.shahad.heroesfandom.domain.model.*
 
+@Parcelize
 @Entity(tableName = "hero")
 data class HeroEntity(
     @PrimaryKey
     @ColumnInfo(name = "id")val id: Long?,
     @ColumnInfo(name = "name")val name: String?,
     @ColumnInfo(name = "slug")val slug: String?,
-    @Embedded val powerstats: PowerStatsEntity?,
-    @Embedded val appearance: AppearanceEntity?,
-    @Embedded val biography: BiographyEntity?,
-    @Embedded val work: WorkEntity?,
-    @Embedded val connections: ConnectionEntity?,
-    @Embedded val images: ImagesEntity?)
+    @Embedded var powerstats: PowerStats? = null,
+    @Embedded var appearance: Appearance? = null,
+    @Embedded var biography: Biography? = null,
+    @Embedded var work: Work? = null,
+    @Embedded var connections: Connection? = null,
+    @Embedded var images: Images? = null) : Parcelable
 

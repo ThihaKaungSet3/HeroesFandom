@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/actionHeroes"
+    app:startDestination="@id/heroesfragment">
+
+    <fragment
+        android:id="@+id/heroesfragment"
+        android:name="non.shahad.heroesfandom.ui.heroes.HeroesFragment"
+        android:label="@string/heroes"
+        tools:layout="@layout/fragment_heroes" >
+
+        <action
+            android:id="@+id/actionHeroestoHeroDetail"
+            app:destination="@id/heroDetailFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/heroDetailFragment"
+        android:name="non.shahad.heroesfandom.ui.herodetail.HeroDetailFragment"
+        android:label="fragment_hero_detail"
+        tools:layout="@layout/fragment_hero_detail" >
+
+        <argument
+            android:name="hero"
+            app:argType="non.shahad.heroesfandom.data.local.entities.HeroEntity"
+            app:nullable="true" />
+    </fragment>
+
+</navigation>

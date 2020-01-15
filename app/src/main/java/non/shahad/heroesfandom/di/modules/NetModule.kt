@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import non.shahad.heroesfandom.core.Constants
 import non.shahad.heroesfandom.data.remote.SuperHeroAPI
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -14,8 +15,17 @@ class NetModule {
 
     @Singleton
     @Provides
-    fun provideHeroesRetrofit() : Retrofit.Builder{
+    fun provideOkHttp() : OkHttpClient{
+        return OkHttpClient().newBuilder()
+//            .addInterceptor(StethoInterceptor())
+            .build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideHeroesRetrofit(okHttpClient: OkHttpClient) : Retrofit.Builder{
         return Retrofit.Builder()
+            .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
     }

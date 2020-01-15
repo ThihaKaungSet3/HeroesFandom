@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/actionMovies"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@+id/moviefragment">
+
+
+    <fragment
+        android:id="@+id/moviefragment"
+        android:name="non.shahad.heroesfandom.ui.movies.MoviesFragment"
+        android:label="@string/movies"
+        tools:layout="@layout/fragment_movies" >
+
+    </fragment>
+
+</navigation>

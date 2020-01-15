@@ -13,7 +13,6 @@ import javax.inject.Singleton
 @Component(modules = [
     AppModule::class,
     ActivityModule::class,
-    FragmentBuilderModule::class,
     NetModule::class,
     PersistenceModule::class,
     AndroidInjectionModule::class
@@ -28,6 +27,6 @@ interface AppComponent : AndroidInjector<DaggerApplication>{
         fun build(): AppComponent
     }
 
-    override fun inject(instance: DaggerApplication?)
+    override fun inject(instance: DaggerApplication)
 
 }

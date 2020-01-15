@@ -2,10 +2,10 @@ package non.shahad.heroesfandom.di.modules
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import non.shahad.heroesfandom.MainActivity
+import non.shahad.heroesfandom.ui.MainActivity
 import non.shahad.heroesfandom.di.scopes.PerActivity
 
-@Module
+@Module(includes = [ViewModelModules::class])
 abstract class ActivityModule{
 
     @PerActivity
