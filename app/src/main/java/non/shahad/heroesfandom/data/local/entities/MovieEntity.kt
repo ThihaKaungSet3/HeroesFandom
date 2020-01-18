@@ -20,6 +20,6 @@ data class MovieEntity(
     @ColumnInfo(name ="release_date")val release_date: String,
     @ColumnInfo(name ="title")val title: String,
     @ColumnInfo(name ="video")val video: Boolean,
-    @ColumnInfo(name ="vote_average")val vote_average: Double,
+    @ColumnInfo(name ="vote_average")var vote_average: Float,
     @ColumnInfo(name ="vote_count")val vote_count: Int
 )

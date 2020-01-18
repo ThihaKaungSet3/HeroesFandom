@@ -9,6 +9,29 @@
     tools:context=".ui.heroes.HeroesFragment"
     android:fitsSystemWindows="true">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar2"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        app:title=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:elevation="2dp"
+        app:menu="@menu/heroes_toolbar_item">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/heroes"
+            android:textColor="@color/black"
+            android:fontFamily="@font/josefinsans_family"
+            android:gravity="center"
+            android:textSize="22sp"/>
+
+    </androidx.appcompat.widget.Toolbar>
+
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
@@ -22,8 +45,13 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/heroesRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -47,7 +47,6 @@ class HeroesFragment : BaseFragment(),HeroesAdapter.HeroSelectListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         startRecyclerView()
 
     }

@@ -56,7 +56,7 @@
                 android:fitsSystemWindows="true"
                 app:titleTextColor="@android:color/white"
                 android:elevation="0dp"
-                app:menu="@menu/heroes_toolbar_item"
+                app:menu="@menu/heroesdetail_toolbar_item"
                 app:title="@{hero.name}"
                 android:theme="@style/AppTheme.PopupOverlay"
                 style="@style/ToolBarWithNavigationBack">

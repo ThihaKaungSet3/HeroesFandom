@@ -77,6 +77,7 @@ class HeroDetailFragment : Fragment() {
     }
 
 
+    // TODO delete palette API and use glidepalette
     private fun doColorThings(){
         Glide.with(this)
             .load(heroParcel.images?.lg)

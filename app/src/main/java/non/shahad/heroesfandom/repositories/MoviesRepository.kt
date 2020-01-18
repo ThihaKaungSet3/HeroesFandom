@@ -9,6 +9,7 @@ import non.shahad.heroesfandom.data.remote.MoviesAPI
 import non.shahad.heroesfandom.data.remote.responses.MovieResponse
 import non.shahad.heroesfandom.utils.domain.RateLimiter
 import non.shahad.heroesfandom.utils.domain.Resource
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -16,9 +17,12 @@ class MoviesRepository @Inject constructor(val moviesDao: MoviesDao,val moviesAP
 
     private val rateLimiter = RateLimiter<String>(5, TimeUnit.MINUTES)
 
+    var isLoading = true
+
     fun loadMovies(page : Int) : LiveData<Resource<List<MovieEntity>>>{
         return object : NetworkBoundResource<List<MovieEntity>,MovieResponse>(){
             override fun saveCallResult(item: MovieResponse) {
+                Timber.tag("autumnsong").d("$item")
                 // Get current page for unique
                 val page = item.page
                 item.let {
@@ -33,7 +37,10 @@ class MoviesRepository @Inject constructor(val moviesDao: MoviesDao,val moviesAP
 
             override fun shouldFetch(data: List<MovieEntity>?): Boolean = data!!.isEmpty()
 
-            override fun loadFromDb(): LiveData<List<MovieEntity>> = moviesDao.getAllMovies(page = page)
+            override fun loadFromDb(): LiveData<List<MovieEntity>> {
+                isLoading = true
+                return moviesDao.getAllMovies(page = page)
+            }
 
             override fun createCall(): Single<MovieResponse> = moviesAPI.getDiscoverMovies(page = page)
 

@@ -20,8 +20,8 @@
 
     <ImageView
         android:id="@+id/heroImageView"
-        android:layout_width="130dp"
-        android:layout_height="130dp"
+        android:layout_width="124dp"
+        android:layout_height="124dp"
         android:src="@mipmap/abomb"
         bindingHeroesImage="@{hero.images.lg}"
         android:transitionName="heroimageView"
