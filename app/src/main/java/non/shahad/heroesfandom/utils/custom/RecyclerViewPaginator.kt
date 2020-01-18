@@ -9,8 +9,6 @@ import timber.log.Timber
  abstract class RecyclerViewPaginator(
      private val recyclerView : RecyclerView) : RecyclerView.OnScrollListener(){
 
-    /** expected item */
-    private var threshold = 1
     /** current page */
     private var currentPage = 1
 
@@ -41,7 +39,7 @@ import timber.log.Timber
                  }
 
 
-                 if ((visibleItemCount + firstVisibleItemPosition + threshold) >= totalItemCount){
+                 if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount){
                      Timber.tag("scrollsong").d("Here: $currentPage")
                      if (!endWithAuto){
                          endWithAuto = true

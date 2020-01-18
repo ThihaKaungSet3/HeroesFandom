@@ -1,6 +1,4 @@
 package non.shahad.heroesfandom.ui.movies
-
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-
 import non.shahad.heroesfandom.R
 import non.shahad.heroesfandom.core.BaseFragment
 import non.shahad.heroesfandom.databinding.FragmentMoviesBinding
@@ -18,7 +15,6 @@ import non.shahad.heroesfandom.di.ViewModelFactory
 import non.shahad.heroesfandom.utils.custom.RecyclerViewPaginator
 import non.shahad.heroesfandom.utils.domain.Status
 import non.shahad.heroesfandom.utils.extensions.reObserve
-import timber.log.Timber
 import java.util.ArrayList
 import javax.inject.Inject
 
@@ -50,7 +46,6 @@ class MoviesFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         moviesViewModel.postMoviePage(1)
         setUpRecyclerView()
-
 
     }
 
