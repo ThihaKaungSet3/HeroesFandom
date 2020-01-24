@@ -28,12 +28,18 @@ class HeroesAdapter(
         }
     }
 
-    fun addHeroes(newList : List<HeroEntity>){
+    fun setHeroesList(newList : List<HeroEntity>){
         val diffResult = DiffUtil.calculateDiff(HeroesDiffCallback(heroList,newList))
         heroList.clear()
         heroList.addAll(newList)
+//        notifyDataSetChanged()
         diffResult.dispatchUpdatesTo(this)
+    }
 
+
+    fun addHero(paginated : List<HeroEntity>){
+        heroList.addAll(paginated)
+        notifyItemRangeInserted(heroList.size - paginated.size + 1, paginated.size)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HeroesViewHolder {

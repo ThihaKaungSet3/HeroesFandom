@@ -5,7 +5,8 @@
     <string name="setting">Setting</string>
     <string name="library">Library</string>
     <string name="movies">Movies</string>
-
+	<string name="search_hero">Search heroes by Name</string>
+	<string name="explore">Explore</string>
     <string name="lorem">
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 		In mollis est vitae erat laoreet consectetur. Mauris dui mauris,
@@ -30,5 +31,7 @@
 	<string name="durability">Durability</string>
 	<string name="power">Power</string>
 	<string name="combat">Combat</string>
+	<string name="comic_industries">Comic publishers</string>
+	<string name="latest_release">Latest Release</string>
 
 </resources>

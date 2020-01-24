@@ -44,7 +44,7 @@ class MoviesAdapter(
 
     fun addMovies(movies : List<MovieEntity>){
         movieList.addAll(movies)
-        notifyItemInserted(movieList.size)
+        notifyItemRangeChanged(movieList.size - movies.size + 1 , movies.size)
     }
 
     override fun getItemCount(): Int = movieList.size

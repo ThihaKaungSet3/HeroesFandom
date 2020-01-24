@@ -8,6 +8,7 @@ import non.shahad.heroesfandom.data.local.entities.HeroEntity
 import non.shahad.heroesfandom.data.remote.SuperHeroAPI
 import non.shahad.heroesfandom.utils.domain.RateLimiter
 import non.shahad.heroesfandom.utils.domain.Resource
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -34,6 +35,12 @@ class HeroesRepository @Inject constructor(
             override fun onFetchFailed() = rateLimiter.reset(Constants.NetworkService.RATE_LIMITER_TYPE)
 
         }.asLiveData
+    }
+
+
+    fun findHeroByName(name : String) : LiveData<List<HeroEntity>>{
+        Timber.tag("autumnsong").d("$name")
+        return heroDao.findHeroByName(name)
     }
 
 

@@ -32,3 +32,12 @@ fun bindingMoviePoster(imageView: ImageView,url: String?,overlay : View){
             .into(imageView)
     }
 }
+
+@BindingAdapter("bindingComicPoster")
+fun bindingComicPoster(imageView: ImageView,url : String?){
+    url.let {
+        Glide.with(imageView.context)
+            .load(url)
+            .into(imageView)
+    }
+}

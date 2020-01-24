@@ -22,6 +22,9 @@ interface SuperHeroDao{
     @Query("SELECT count(*) FROM hero")
     fun getHeroesCount() : Int
 
+    @Query("SELECT * FROM hero WHERE name LIKE '%' || :name || '%'")
+    fun findHeroByName(name : String) : LiveData<List<HeroEntity>>
+
     @Transaction
     fun deleteAndInsertAll(heroesList: List<HeroEntity>){
         deleteAllHeroes()

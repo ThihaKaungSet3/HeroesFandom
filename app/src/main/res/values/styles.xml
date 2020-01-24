@@ -35,4 +35,5 @@
     <style name="ProgressBarTheme" parent="Widget.AppCompat.ProgressBar.Horizontal">
         <item name="android:progressTint">@color/colorPrimaryDark</item>
     </style>
+
 </resources>

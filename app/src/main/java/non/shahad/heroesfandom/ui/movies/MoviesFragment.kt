@@ -15,6 +15,7 @@ import non.shahad.heroesfandom.di.ViewModelFactory
 import non.shahad.heroesfandom.utils.custom.RecyclerViewPaginator
 import non.shahad.heroesfandom.utils.domain.Status
 import non.shahad.heroesfandom.utils.extensions.reObserve
+import timber.log.Timber
 import java.util.ArrayList
 import javax.inject.Inject
 
@@ -25,8 +26,7 @@ class MoviesFragment : BaseFragment() {
     lateinit var viewModelFactory : ViewModelFactory
     private lateinit var viewBinding : FragmentMoviesBinding
     private lateinit var adapter: MoviesAdapter
-    private val isLastPage  = false
-    private var isLoading = true
+    private var isLoading = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,8 +44,9 @@ class MoviesFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        moviesViewModel.postMoviePage(1)
+
         setUpRecyclerView()
+        moviesViewModel.postMoviePage(1)
 
     }
 
@@ -54,9 +55,10 @@ class MoviesFragment : BaseFragment() {
         viewBinding.apply {
             movieRecycler.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
             movieRecycler.adapter = adapter
+
             movieRecycler.addOnScrollListener(object : RecyclerViewPaginator(movieRecycler){
                 override fun isLastPage(): Boolean {
-                    return isLastPage
+                    return false
                 }
 
                 override fun loadMore(page: Int) {
@@ -75,22 +77,33 @@ class MoviesFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        moviesViewModel.movieListLiveData.reObserve(this, Observer {
-            when(it.status){
-                Status.LOADING -> {
-                    isLoading = true
+            moviesViewModel.movieListLiveData.reObserve(this, Observer {
+                when(it.status){
+                    Status.LOADING -> {
+                        isLoading = true
 //                    viewBinding.progressBar.visibility = View.VISIBLE
+                    }
+                    Status.SUCCESS -> {
+                        adapter.addMovies(it.data!!)
+                        isLoading = false
+                    }
+                    Status.ERROR -> {
+                        Toast.makeText(context,"Something went wrong", Toast.LENGTH_SHORT).show()
+                    }
                 }
-                Status.SUCCESS -> {
-                    adapter.addMovies(it.data!!)
-                    isLoading = false
-                }
-                Status.ERROR -> {
-                    Toast.makeText(context,"Something went wrong", Toast.LENGTH_SHORT).show()
-                }
-            }
 
-        })
+            })
+
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+    }
+
+    override fun onPause() {
+        super.onPause()
     }
 
 
