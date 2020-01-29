@@ -26,6 +26,7 @@ import non.shahad.heroesfandom.R
 import non.shahad.heroesfandom.data.local.entities.HeroEntity
 import non.shahad.heroesfandom.databinding.FragmentHeroDetailBinding
 import non.shahad.heroesfandom.ui.MainActivity
+import non.shahad.heroesfandom.ui.heroes.HeroesFragment
 import non.shahad.heroesfandom.utils.ColorPalette
 import timber.log.Timber
 
@@ -45,14 +46,13 @@ class HeroDetailFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+//        sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         heroParcel = arguments?.get("hero") as HeroEntity
-
 
         viewBinding.hero = heroParcel
         toolbarThings()
@@ -62,7 +62,9 @@ class HeroDetailFragment : Fragment() {
 
     private fun toolbarThings(){
         viewBinding.toolbar.setNavigationOnClickListener {
-            findNavController().navigateUp()
+            (context as MainActivity).navController.popFragment()
+            Timber.tag("OhBaby").d("${(context as MainActivity).navController}")
+//            findNavController().navigateUp()
         }
 
         viewBinding.toolbar.setOnMenuItemClickListener { item ->
@@ -111,6 +113,12 @@ class HeroDetailFragment : Fragment() {
 
             })
             .into(viewBinding.heroesImageView)
+    }
+
+    companion object{
+        fun newInstance() : HeroDetailFragment {
+            return HeroDetailFragment()
+        }
     }
 
     private fun changeProgressbarColor(color : Int){

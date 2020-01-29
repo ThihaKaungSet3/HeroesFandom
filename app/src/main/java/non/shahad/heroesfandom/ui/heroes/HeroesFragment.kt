@@ -1,5 +1,6 @@
 package non.shahad.heroesfandom.ui.heroes
 
+import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
@@ -16,6 +17,7 @@ import non.shahad.heroesfandom.core.BaseFragment
 import non.shahad.heroesfandom.data.local.entities.HeroEntity
 import non.shahad.heroesfandom.databinding.FragmentHeroesBinding
 import non.shahad.heroesfandom.di.ViewModelFactory
+import non.shahad.heroesfandom.ui.herodetail.HeroDetailFragment
 import non.shahad.heroesfandom.utils.custom.RecyclerViewPaginator
 import non.shahad.heroesfandom.utils.domain.Status
 import non.shahad.heroesfandom.utils.extensions.reObserve
@@ -26,6 +28,7 @@ class HeroesFragment : BaseFragment(),HeroesAdapter.HeroSelectListener {
 
     private lateinit var viewBinding : FragmentHeroesBinding
     private lateinit var heroesViewModel: HeroesViewModel
+
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private lateinit var heroAdapter : HeroesAdapter
@@ -51,10 +54,7 @@ class HeroesFragment : BaseFragment(),HeroesAdapter.HeroSelectListener {
         (activity as AppCompatActivity).setSupportActionBar(viewBinding.toolbar2)
         (activity as AppCompatActivity).title = ""
 
-        if (heroesViewModel.pagedItemCount.value!! == 0 ){
-            Timber.tag("autumnsong").d("${heroAdapter.itemCount}")
-            heroesViewModel.fetchAllHeroes(true)
-        }
+        heroesViewModel.fetchAllHeroes(true)
 
     }
 
@@ -69,7 +69,6 @@ class HeroesFragment : BaseFragment(),HeroesAdapter.HeroSelectListener {
                 Status.SUCCESS -> {
                     viewBinding.progressBar.visibility = View.GONE
                     heroAdapter.setHeroesList(it.data!!)
-                    Timber.tag("autumnsong").d("success ${heroAdapter.itemCount}")
                 }
                 Status.ERROR -> {
                     Toast.makeText(context,"Something went wrong",Toast.LENGTH_SHORT).show()
@@ -127,16 +126,25 @@ class HeroesFragment : BaseFragment(),HeroesAdapter.HeroSelectListener {
     }
 
     override fun onHeroSelect(hero: HeroEntity, imageView: ImageView) {
-
         val bundle = Bundle()
         bundle.putParcelable("hero",hero)
 
-        findNavController().navigate(R.id.actionHeroestoHeroDetail,bundle)
+        val heroDetailFragment = HeroDetailFragment.newInstance()
+        heroDetailFragment.arguments = bundle
+//        Timber.tag("something").d("$mFragmentNavigation")
+        mFragmentNavigation.pushFragment(heroDetailFragment)
+
     }
 
-    override fun onPause() {
-        heroesViewModel.pagedItemCount.postValue(heroAdapter.itemCount)
-        super.onPause()
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+    }
+    
+
+    companion object{
+        fun newInstance() : HeroesFragment{
+            return HeroesFragment()
+        }
     }
 
 

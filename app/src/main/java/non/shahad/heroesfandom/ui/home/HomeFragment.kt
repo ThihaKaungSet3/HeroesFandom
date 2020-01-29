@@ -12,9 +12,14 @@ import kotlinx.android.synthetic.main.fragment_home.*
 
 import non.shahad.heroesfandom.R
 import non.shahad.heroesfandom.core.BaseFragment
+import non.shahad.heroesfandom.core.ViewTypes
 import non.shahad.heroesfandom.di.Injectable
 import non.shahad.heroesfandom.di.ViewModelFactory
+import non.shahad.heroesfandom.ui.home.models.Home
+import non.shahad.heroesfandom.ui.home.models.ParentComic
+import non.shahad.heroesfandom.ui.home.models.ParentPublisher
 import non.shahad.heroesfandom.utils.extensions.reObserve
+import timber.log.Timber
 import javax.inject.Inject
 
 class HomeFragment : BaseFragment(),Injectable {
@@ -22,6 +27,8 @@ class HomeFragment : BaseFragment(),Injectable {
     lateinit var viewmodelFactory : ViewModelFactory
 
     lateinit var homeViewmodel : HomeViewModel
+
+    private val homeAdapter: HomeAdapter = HomeAdapter()
 
 
     override fun onCreateView(
@@ -41,23 +48,45 @@ class HomeFragment : BaseFragment(),Injectable {
         super.onViewCreated(view, savedInstanceState)
         setUpRecyclerView()
         homeViewmodel.loadComic("marvel",1)
+        homeViewmodel.loadcomicByTag("indie-week",1)
+        homeViewmodel.loadPublisher(true)
+
     }
+
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
+//        homeViewmodel.loadComic("dc",1)
         homeViewmodel.comicLiveData.reObserve(this, Observer {
-
+            Timber.tag("tagg_").d("changes")
+            homeAdapter.addItems(Home(it.categoryName,
+                ViewTypes.COMIC, ParentComic(list = it.list),null))
         })
 
+        homeViewmodel.publisherLiveData.reObserve(this, Observer {
+            homeAdapter.addItems(Home("Publishers",
+                ViewTypes.PUBLISHER, null, ParentPublisher(list = it)))
+        })
+
+        homeViewmodel.comicByTag.reObserve(this, Observer {
+            Timber.tag("tagg_").d("changes")
+            homeAdapter.addItems(Home(it.categoryName,
+                ViewTypes.COMIC, ParentComic(list = it.list),null))
+        })
 
     }
 
     private fun setUpRecyclerView(){
         homeRecyclerView.apply {
             layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
+            adapter = homeAdapter
         }
     }
 
+    companion object{
+        fun newInstance() : HomeFragment {
+            return HomeFragment()
+        }
+    }
 
 }

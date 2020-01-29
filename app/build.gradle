@@ -105,6 +105,8 @@ dependencies {
 
     implementation 'com.miguelcatalan:materialsearchview:1.4.0'
 
+    implementation 'com.ncapdevi:frag-nav:3.2.0'
+    
 //    implementation "com.facebook.stetho:stetho:$stetho_version"
 //    implementation "com.facebook.stetho:stetho-okhttp3:$stetho_version"
 

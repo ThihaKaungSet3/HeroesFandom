@@ -1,6 +1,6 @@
 package non.shahad.heroesfandom.core
 
-object Constants {
+class Constants {
     object NetworkService {
         const val SUPERHEROAPI_URL = "https://cdn.rawgit.com/"
         const val MOVIESAPI_URL = "https://api.themoviedb.org/3/"
@@ -12,6 +12,20 @@ object Constants {
 
     object Persistence{
         const val DATABASE_NAME = "heroes-db"
+    }
+
+    object BottomNav {
+        const val INDEX_HOME = 0
+        const val INDEX_MOVIES = 1
+        const val INDEX_HEROES = 2
+        const val INDEX_LIBRARY = 3
+    }
+
+    object Adapter{
+        const val COMIC_VIEWTYPE = 1
+        const val PUBLISHER_VIEWTYPE = 2
+        const val BANNER_VIEWTYPE = 1
+        const val MOVIE_VIEWTYPE = 2
     }
 
 }

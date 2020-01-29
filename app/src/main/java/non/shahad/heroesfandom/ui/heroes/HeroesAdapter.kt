@@ -33,7 +33,9 @@ class HeroesAdapter(
         heroList.clear()
         heroList.addAll(newList)
 //        notifyDataSetChanged()
-        diffResult.dispatchUpdatesTo(this)
+        notifyDataSetChanged()
+//        diffResult.dispatchUpdatesTo(this)
+
     }
 
 

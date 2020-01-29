@@ -10,9 +10,11 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import non.shahad.heroesfandom.R
 import non.shahad.heroesfandom.core.BaseFragment
+import non.shahad.heroesfandom.core.ViewTypes
 import non.shahad.heroesfandom.databinding.FragmentMoviesBinding
 import non.shahad.heroesfandom.di.ViewModelFactory
-import non.shahad.heroesfandom.utils.custom.RecyclerViewPaginator
+import non.shahad.heroesfandom.ui.movies.models.Banner
+import non.shahad.heroesfandom.ui.movies.models.MainMovies
 import non.shahad.heroesfandom.utils.domain.Status
 import non.shahad.heroesfandom.utils.extensions.reObserve
 import timber.log.Timber
@@ -25,7 +27,7 @@ class MoviesFragment : BaseFragment() {
     @Inject
     lateinit var viewModelFactory : ViewModelFactory
     private lateinit var viewBinding : FragmentMoviesBinding
-    private lateinit var adapter: MoviesAdapter
+    private var adapterMain: MainMoviesAdapter = MainMoviesAdapter(mutableListOf())
     private var isLoading = false
 
     override fun onCreateView(
@@ -40,70 +42,63 @@ class MoviesFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         moviesViewModel = ViewModelProviders.of(this,viewModelFactory).get(MoviesViewModel::class.java)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        setUpRecyclerView()
         moviesViewModel.postMoviePage(1)
 
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setUpRecyclerView()
+    }
+
+
+
     private fun setUpRecyclerView(){
-        adapter = MoviesAdapter(ArrayList())
-        viewBinding.apply {
-            movieRecycler.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
-            movieRecycler.adapter = adapter
-
-            movieRecycler.addOnScrollListener(object : RecyclerViewPaginator(movieRecycler){
-                override fun isLastPage(): Boolean {
-                    return false
-                }
-
-                override fun loadMore(page: Int) {
-                    moviesViewModel.postMoviePage(page)
-                }
-
-                override fun isLoading(): Boolean {
-                    return isLoading
-                }
-
-            })
-
+        viewBinding.movieMainRecycler.apply {
+            layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
+            adapter = adapterMain
         }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        moviesViewModel.loadMovies(1)
 
-            moviesViewModel.movieListLiveData.reObserve(this, Observer {
-                when(it.status){
-                    Status.LOADING -> {
-                        isLoading = true
+
+        moviesViewModel.movieListLiveData.reObserve(this, Observer {
+            when(it.status){
+                Status.LOADING -> {
 //                    viewBinding.progressBar.visibility = View.VISIBLE
+                }
+                Status.SUCCESS -> {
+                    val bannerList : ArrayList<Banner> = ArrayList()
+                    for (i in 1..4){
+                        val movie = it.data?.get(i)!!
+                        bannerList.add(Banner(movie.poster_path,movie.title))
                     }
-                    Status.SUCCESS -> {
-                        adapter.addMovies(it.data!!)
-                        isLoading = false
-                    }
-                    Status.ERROR -> {
-                        Toast.makeText(context,"Something went wrong", Toast.LENGTH_SHORT).show()
-                    }
+
+                    adapterMain.addItem(MainMovies(ViewTypes.BANNER,null,bannerList))
+                    adapterMain.addItem(MainMovies(ViewTypes.MOVIES,it.data,null,"Discover"))
+
                 }
 
-            })
+                Status.ERROR -> {
+                    Toast.makeText(context,"Something went wrong", Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
 
 
+        moviesViewModel.loadTrendingMovies().reObserve(this, Observer {
+            adapterMain.addItem(MainMovies(ViewTypes.MOVIES,it,null,"Trending"))
+        })
     }
 
-    override fun onStart() {
-        super.onStart()
 
-    }
-
-    override fun onPause() {
-        super.onPause()
+    companion object{
+        fun newInstance() : MoviesFragment {
+            return MoviesFragment()
+        }
     }
 
 

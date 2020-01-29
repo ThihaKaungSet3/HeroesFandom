@@ -8,4 +8,7 @@ import retrofit2.http.Query
 interface MoviesAPI {
     @GET("discover/movie")
     fun getDiscoverMovies(@Query("page") page : Int) : Single<MovieResponse>
+
+    @GET("trending/movie/day")
+    fun getTrendingMovies() : Single<MovieResponse>
 }

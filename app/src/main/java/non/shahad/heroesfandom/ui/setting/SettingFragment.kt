@@ -9,6 +9,7 @@ import android.view.ViewGroup
 
 import non.shahad.heroesfandom.R
 import non.shahad.heroesfandom.core.BaseFragment
+import non.shahad.heroesfandom.ui.heroes.HeroesFragment
 
 /**
  * A simple [Fragment] subclass.
@@ -22,6 +23,13 @@ class SettingFragment : BaseFragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_setting, container, false)
     }
+
+    companion object{
+        fun newInstance() : SettingFragment {
+            return SettingFragment()
+        }
+    }
+
 
 
 }

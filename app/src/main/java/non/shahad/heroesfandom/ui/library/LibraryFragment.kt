@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import non.shahad.heroesfandom.R
+import non.shahad.heroesfandom.ui.heroes.HeroesFragment
 
 class LibraryFragment : Fragment() {
 
@@ -16,6 +17,12 @@ class LibraryFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_library, container, false)
+    }
+
+    companion object{
+        fun newInstance() : LibraryFragment {
+            return LibraryFragment()
+        }
     }
 
 

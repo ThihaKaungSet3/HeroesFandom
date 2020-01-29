@@ -14,17 +14,23 @@ class MoviesViewModel @Inject constructor(
     private val moviePageLiveData : MutableLiveData<Int> = MutableLiveData()
     val movieListLiveData : LiveData<Resource<List<MovieEntity>>>
 
+    var currentPage : MutableLiveData<Int> = MutableLiveData()
+
 //    val movies = MediatorLiveData<Resource<List<MovieEntity>>>()
 
     init {
         this.movieListLiveData = Transformations.switchMap(moviePageLiveData) { page ->
             moviesRepository.loadMovies(page)
         }
+
+        this.currentPage.value = 1
     }
 
     fun loadMovies(page : Int) : LiveData<Resource<List<MovieEntity>>> {
         return moviesRepository.loadMovies(page)
     }
+
+    fun loadTrendingMovies() : LiveData<List<MovieEntity>> = moviesRepository.loadTrendingMovies()
 
     fun isLoading() = moviesRepository.isLoading
 
