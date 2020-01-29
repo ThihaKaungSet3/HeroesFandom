@@ -14,7 +14,8 @@ Project for super heroes fan (show heroes and movies in one place)
 - Kotlin
 - RxJava
 - Room
-- Navigation Component
+- FragNav (for fragment transaction)
+- Jsoup (for parsing HTML document)
 - LiveData
 - Glide
 - Retrofit
@@ -24,6 +25,7 @@ Project for super heroes fan (show heroes and movies in one place)
 
 ### Screenshots
 <p align="center">
-  <img src="screenshots/heroes.jpg" width="270" alt="Heroes">
+  <img src="screenshots/home.jpg" width="270" alt="Home">
   <img src="screenshots/movies.jpg" width="270" alt="Movies">
+  <img src="screenshots/heroes.jpg" width="270" alt="Heroes">
 </p>
