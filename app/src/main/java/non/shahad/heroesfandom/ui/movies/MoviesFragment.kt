@@ -17,7 +17,6 @@ import non.shahad.heroesfandom.ui.movies.models.Banner
 import non.shahad.heroesfandom.ui.movies.models.MainMovies
 import non.shahad.heroesfandom.utils.domain.Status
 import non.shahad.heroesfandom.utils.extensions.reObserve
-import timber.log.Timber
 import java.util.ArrayList
 import javax.inject.Inject
 
@@ -27,8 +26,8 @@ class MoviesFragment : BaseFragment() {
     @Inject
     lateinit var viewModelFactory : ViewModelFactory
     private lateinit var viewBinding : FragmentMoviesBinding
-    private var adapterMain: MainMoviesAdapter = MainMoviesAdapter(mutableListOf())
-    private var isLoading = false
+    private lateinit var adapterDelegate : MainMovieDelegateAdapter
+    private val itemList : MutableList<MainMovies> = ArrayList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,9 +53,12 @@ class MoviesFragment : BaseFragment() {
 
 
     private fun setUpRecyclerView(){
+        adapterDelegate = MainMovieDelegateAdapter(context!!)
+
         viewBinding.movieMainRecycler.apply {
             layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
-            adapter = adapterMain
+            adapter = adapterDelegate
+            setHasFixedSize(true)
         }
     }
 
@@ -77,8 +79,13 @@ class MoviesFragment : BaseFragment() {
                         bannerList.add(Banner(movie.poster_path,movie.title))
                     }
 
-                    adapterMain.addItem(MainMovies(ViewTypes.BANNER,null,bannerList))
-                    adapterMain.addItem(MainMovies(ViewTypes.MOVIES,it.data,null,"Discover"))
+                    itemList.add(MainMovies(1,ViewTypes.BANNER,null,bannerList))
+                    itemList.add(MainMovies(2,ViewTypes.MOVIES,it.data,null,"Discover"))
+
+
+                        adapterDelegate.items = itemList
+//                    adapterMain.addItem(MainMovies(ViewTypes.BANNER,null,bannerList))
+//                    adapterMain.addItem(MainMovies(ViewTypes.MOVIES,it.data,null,"Discover"))
 
                 }
 
@@ -90,7 +97,11 @@ class MoviesFragment : BaseFragment() {
 
 
         moviesViewModel.loadTrendingMovies().reObserve(this, Observer {
-            adapterMain.addItem(MainMovies(ViewTypes.MOVIES,it,null,"Trending"))
+
+            itemList.add( MainMovies(3,ViewTypes.MOVIES,it,null,"Trending"))
+
+            adapterDelegate.items = itemList
+
         })
     }
 

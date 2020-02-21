@@ -58,6 +58,8 @@ class HeroesFragment : BaseFragment(),HeroesAdapter.HeroSelectListener {
 
     }
 
+
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 

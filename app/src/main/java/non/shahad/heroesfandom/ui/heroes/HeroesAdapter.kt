@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import non.shahad.heroesfandom.R
 import non.shahad.heroesfandom.data.local.entities.HeroEntity
 import non.shahad.heroesfandom.databinding.HeroesListitemBinding
+import timber.log.Timber
 
 class HeroesAdapter(
     private var heroList: ArrayList<HeroEntity>,
@@ -24,6 +25,11 @@ class HeroesAdapter(
 
             itemHeroesBinding.rootView.setOnClickListener {
                 heroSelectListener.onHeroSelect(hero = hero, imageView = itemHeroesBinding.heroImageView)
+            }
+
+            itemHeroesBinding.root.setOnLongClickListener{
+                Timber.tag("HeroesAdapter_").d("$layoutPosition")
+                return@setOnLongClickListener true
             }
         }
     }

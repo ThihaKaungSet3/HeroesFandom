@@ -35,4 +35,5 @@ class MoviesViewModel @Inject constructor(
     fun isLoading() = moviesRepository.isLoading
 
     fun postMoviePage(page : Int) = this.moviePageLiveData.postValue(page)
+
 }

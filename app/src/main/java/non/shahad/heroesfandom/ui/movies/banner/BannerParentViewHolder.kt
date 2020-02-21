@@ -9,7 +9,7 @@ class BannerParentViewHolder(val binding: BannerParentItemBinding) : RecyclerVie
     fun bind(itemList : List<Banner>){
         binding.movieRecycler.apply {
             layoutManager = BannerLayoutManager(binding.root.context,this,5)
-            adapter = BannerAdapter(itemList)
+            adapter = BannerChildAdapter(itemList)
 
             with(binding.interceptLayout){
                 setIntercept(false)

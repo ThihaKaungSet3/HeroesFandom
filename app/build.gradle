@@ -58,6 +58,7 @@ def timber_version = "4.7.1"
 def palette_version = "28.0.0"
 def fragment_version = "1.2.0-rc05"
 def jsoup_version = '1.12.1'
+def adapter_delegate_version = '4.2.0'
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -103,9 +104,9 @@ dependencies {
 
     implementation "org.jsoup:jsoup:$jsoup_version"
 
-    implementation 'com.miguelcatalan:materialsearchview:1.4.0'
-
     implementation 'com.ncapdevi:frag-nav:3.2.0'
+
+    implementation "com.hannesdorfmann:adapterdelegates4-kotlin-dsl:$adapter_delegate_version"
     
 //    implementation "com.facebook.stetho:stetho:$stetho_version"
 //    implementation "com.facebook.stetho:stetho-okhttp3:$stetho_version"

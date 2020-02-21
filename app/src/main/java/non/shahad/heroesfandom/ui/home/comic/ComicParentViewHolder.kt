@@ -6,9 +6,9 @@ import non.shahad.heroesfandom.databinding.ComicParentItemBinding
 import non.shahad.heroesfandom.ui.home.models.ParentComic
 
 class ComicParentViewHolder(private val binding : ComicParentItemBinding) : RecyclerView.ViewHolder(binding.root){
-    fun bind(parentComic: ParentComic){
+    fun bind(title : String, parentComic: ParentComic){
         binding.apply {
-            titleTxt.text = parentComic.name
+            titleTxt.text = title
             comicRecyclerView.layoutManager = LinearLayoutManager(binding.root.context,LinearLayoutManager.HORIZONTAL,false)
             comicRecyclerView.adapter = ComicAdapter(parentComic.list)
         }

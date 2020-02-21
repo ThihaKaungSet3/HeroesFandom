@@ -8,7 +8,7 @@ import non.shahad.heroesfandom.R
 import non.shahad.heroesfandom.databinding.BannerChildItemBinding
 import non.shahad.heroesfandom.ui.movies.models.Banner
 
-class BannerAdapter(private val bannerItems : List<Banner>) : RecyclerView.Adapter<BannerChildViewHolder>() {
+class BannerChildAdapter(private val bannerItems : List<Banner>) : RecyclerView.Adapter<BannerChildViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BannerChildViewHolder {
         val inflater = LayoutInflater.from(parent.context)

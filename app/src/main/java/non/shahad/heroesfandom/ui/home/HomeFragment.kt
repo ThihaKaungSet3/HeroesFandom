@@ -28,7 +28,9 @@ class HomeFragment : BaseFragment(),Injectable {
 
     lateinit var homeViewmodel : HomeViewModel
 
-    private val homeAdapter: HomeAdapter = HomeAdapter()
+    private lateinit var homeDelegate : HomeAdapterDelegate
+
+    private val itemList = ArrayList<Home>()
 
 
     override fun onCreateView(
@@ -46,7 +48,7 @@ class HomeFragment : BaseFragment(),Injectable {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUpRecyclerView()
+        setUpRecyclerview()
         homeViewmodel.loadComic("marvel",1)
         homeViewmodel.loadcomicByTag("indie-week",1)
         homeViewmodel.loadPublisher(true)
@@ -56,30 +58,39 @@ class HomeFragment : BaseFragment(),Injectable {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-//        homeViewmodel.loadComic("dc",1)
+
         homeViewmodel.comicLiveData.reObserve(this, Observer {
             Timber.tag("tagg_").d("changes")
-            homeAdapter.addItems(Home(it.categoryName,
-                ViewTypes.COMIC, ParentComic(list = it.list),null))
+            itemList.add(Home(id = 1,title = it.categoryName,
+                viewTypes = ViewTypes.COMIC, parentComic = ParentComic(list = it.list),parentPublisher = null))
+            homeDelegate.items = itemList
+
         })
 
         homeViewmodel.publisherLiveData.reObserve(this, Observer {
-            homeAdapter.addItems(Home("Publishers",
-                ViewTypes.PUBLISHER, null, ParentPublisher(list = it)))
+            itemList.add(Home(id = 2,title = "Publishers",
+                viewTypes = ViewTypes.PUBLISHER,  parentPublisher = ParentPublisher(list = it), parentComic = null))
+            homeDelegate.items = itemList
+
         })
 
         homeViewmodel.comicByTag.reObserve(this, Observer {
             Timber.tag("tagg_").d("changes")
-            homeAdapter.addItems(Home(it.categoryName,
-                ViewTypes.COMIC, ParentComic(list = it.list),null))
+            itemList.add(Home(id = 3,title = it.categoryName,
+                viewTypes = ViewTypes.COMIC,parentComic =  ParentComic(list = it.list),parentPublisher = null))
+
+            homeDelegate.items = itemList
+
         })
 
     }
 
-    private fun setUpRecyclerView(){
+    private fun setUpRecyclerview(){
+        homeDelegate = HomeAdapterDelegate(context!!)
+
         homeRecyclerView.apply {
             layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
-            adapter = homeAdapter
+            adapter = homeDelegate
         }
     }
 
