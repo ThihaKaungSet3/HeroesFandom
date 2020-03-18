@@ -15,7 +15,7 @@
         android:layout_marginTop="8dp"
         android:fontFamily="@font/alatsi_family"
         android:text="@string/latest_release"
-        android:textColor="@color/black"
+        android:textColor="@color/colorAccent"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

@@ -11,6 +11,7 @@
         android:id="@+id/homeRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:nestedScrollingEnabled="true"/>
+        android:nestedScrollingEnabled="true"
+        android:background="@color/colorPrimary"/>
 
 </FrameLayout>

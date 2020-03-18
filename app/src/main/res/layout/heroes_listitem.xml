@@ -39,7 +39,7 @@
         android:text="@{hero.name}"
         android:textAllCaps="true"
         android:textAlignment="center"
-        android:textColor="@color/black"
+        android:textColor="@color/colorAccent"
         android:textSize="15sp"
         android:minLines="1"
         android:fontFamily="@font/josefinsans"

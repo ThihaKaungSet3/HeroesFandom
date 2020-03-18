@@ -2,82 +2,99 @@ package non.shahad.heroesfandom.repositories
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import io.reactivex.Single
-import io.reactivex.SingleObserver
+import io.reactivex.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import non.shahad.heroesfandom.core.Constants
-import non.shahad.heroesfandom.data.local.daos.MoviesDao
+import non.shahad.heroesfandom.core.ViewTypes
 import non.shahad.heroesfandom.data.local.entities.MovieEntity
-import non.shahad.heroesfandom.data.remote.MoviesAPI
-import non.shahad.heroesfandom.data.remote.responses.MovieResponse
-import non.shahad.heroesfandom.utils.domain.RateLimiter
+import non.shahad.heroesfandom.ui.movies.models.Banner
+import non.shahad.heroesfandom.ui.movies.models.MainMovies
+import non.shahad.heroesfandom.domain.usecases.MovieUseCase
 import non.shahad.heroesfandom.utils.domain.Resource
-import non.shahad.heroesfandom.utils.domain.Status
-import timber.log.Timber
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class MoviesRepository @Inject constructor(val moviesDao: MoviesDao,val moviesAPI: MoviesAPI){
-
-    private val rateLimiter = RateLimiter<String>(5, TimeUnit.MINUTES)
+class MoviesRepository @Inject constructor(
+    private val movieUseCase: MovieUseCase
+){
 
     private var disposable : Disposable? = null
 
-    var isLoading = true
+    fun loadMoviesByCategoryName(name : String,page : Int) : LiveData<Resource<List<MainMovies>>>{
+        val movieLiveData : MutableLiveData<Resource<List<MainMovies>>> = MutableLiveData()
 
-    fun loadMovies(page : Int) : LiveData<Resource<List<MovieEntity>>>{
-        return object : NetworkBoundResource<List<MovieEntity>,MovieResponse>(){
-            override fun saveCallResult(item: MovieResponse) {
-                Timber.tag("autumnsong").d("$item")
-                // Get current page for unique
-                val page = item.page
-                item.let {
-                    // add page to each movieEntity as unique when fetching
-                    it.results.forEach { movie ->
-                        movie.page = page
-                    }
-                    // Insert to movie
-                    moviesDao.insertMoviesList(it.results)
-                }
-            }
-
-            override fun shouldFetch(data: List<MovieEntity>?): Boolean = data!!.isEmpty()
-
-            override fun loadFromDb(): LiveData<List<MovieEntity>> {
-                isLoading = true
-                return moviesDao.getAllMovies(page = page)
-            }
-
-            override fun createCall(): Single<MovieResponse> = moviesAPI.getDiscoverMovies(page = page)
-
-            override fun onFetchFailed() = rateLimiter.reset(Constants.NetworkService.RATE_LIMITER_TYPE)
-
-        }.asLiveData
-    }
-
-    fun loadTrendingMovies() : LiveData<List<MovieEntity>>{
-        val liveData : MutableLiveData<List<MovieEntity>> = MutableLiveData()
-        moviesAPI.getTrendingMovies()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : SingleObserver<MovieResponse>{
-                override fun onSuccess(t: MovieResponse) {
-                    liveData.value = t.results
-                    disposable?.dispose()
+        Observable.concat(
+            movieUseCase.getLocalMoviesByCategoryName(name,page).subscribeOn(Schedulers.computation()),
+            movieUseCase.getRemoteMoviesByCategoryName(name,page).subscribeOn(Schedulers.io())
+        )
+            .observeOn(AndroidSchedulers.mainThread(),true)
+            .subscribe(object : Observer<List<MovieEntity>>{
+                override fun onComplete() {
                 }
 
                 override fun onSubscribe(d: Disposable) {
                     disposable = d
+                    movieLiveData.postValue(Resource.loading(null))
+                }
+
+                override fun onNext(t: List<MovieEntity>) {
+                    val modifiedList = listOf<MainMovies>(
+                        MainMovies(1,ViewTypes.BANNER,null,prepareMoviesForBanner(t)),
+                        MainMovies(2,ViewTypes.MOVIES,t,null,"Discover")
+                    )
+                    movieLiveData.value = Resource.success(modifiedList)
                 }
 
                 override fun onError(e: Throwable) {
+                    movieLiveData.postValue(Resource.error(e.message!!,null))
                     disposable?.dispose()
                 }
 
             })
 
-        return liveData
+        return movieLiveData
     }
+
+    fun prepareMoviesForBanner(movieList : List<MovieEntity>) : List<Banner>{
+        val bannerList = arrayListOf<Banner>()
+        for(i in 0..4){
+            val movie = movieList[i]
+            bannerList.add(Banner(movie.poster_path,movie.title))
+        }
+
+        return bannerList
+    }
+
+    fun loadTrendingMovies() : LiveData<Resource<List<MainMovies>>>{
+        val movieLiveData : MutableLiveData<Resource<List<MainMovies>>> = MutableLiveData()
+
+        Observable.concat(
+            movieUseCase.getLocalTrendingMovie(),
+            movieUseCase.getRemoteTrendingMovie()
+        ).observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : Observer<List<MovieEntity>>{
+                override fun onComplete() {
+                }
+
+                override fun onSubscribe(d: Disposable) {
+                    disposable = d
+                    movieLiveData.postValue(Resource.loading(null))
+                }
+
+                override fun onNext(t: List<MovieEntity>) {
+                    movieLiveData.value = Resource.success(listOf(
+                        MainMovies(3,ViewTypes.MOVIES,t,null,"Discover")
+                    ))
+                }
+
+                override fun onError(e: Throwable) {
+                    movieLiveData.postValue(Resource.error(e.message!!,null))
+                    disposable?.dispose()
+                }
+            })
+        return movieLiveData
+    }
+
+
+
 }

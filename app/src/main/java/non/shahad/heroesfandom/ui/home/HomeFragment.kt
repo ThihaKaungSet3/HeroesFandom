@@ -2,6 +2,7 @@ package non.shahad.heroesfandom.ui.home
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +20,6 @@ import non.shahad.heroesfandom.ui.home.models.Home
 import non.shahad.heroesfandom.ui.home.models.ParentComic
 import non.shahad.heroesfandom.ui.home.models.ParentPublisher
 import non.shahad.heroesfandom.utils.extensions.reObserve
-import timber.log.Timber
 import javax.inject.Inject
 
 class HomeFragment : BaseFragment(),Injectable {
@@ -49,39 +49,40 @@ class HomeFragment : BaseFragment(),Injectable {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpRecyclerview()
-        homeViewmodel.loadComic("marvel",1)
-        homeViewmodel.loadcomicByTag("indie-week",1)
-        homeViewmodel.loadPublisher(true)
 
     }
 
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        homeViewmodel.loadPublisher(true)
 
         homeViewmodel.comicLiveData.reObserve(this, Observer {
-            Timber.tag("tagg_").d("changes")
-            itemList.add(Home(id = 1,title = it.categoryName,
-                viewTypes = ViewTypes.COMIC, parentComic = ParentComic(list = it.list),parentPublisher = null))
-            homeDelegate.items = itemList
-
+            Log.d("UUU", "onActivityCreated: $it")
+            if (!homeViewmodel.isAlreadyContain(listOf(it))){
+                homeViewmodel.addComic(it)
+            }
+            homeDelegate.items = homeViewmodel.memoryCache
+//            homeViewmodel.loadcomicByTag("dc-week",1)
         })
 
-        homeViewmodel.publisherLiveData.reObserve(this, Observer {
-            itemList.add(Home(id = 2,title = "Publishers",
+        homeViewmodel.publisherEntityLiveData.reObserve(this, Observer {
+
+            homeViewmodel.clearList()
+            homeViewmodel.addComic(Home(id = 2,title = "Publishers",
                 viewTypes = ViewTypes.PUBLISHER,  parentPublisher = ParentPublisher(list = it), parentComic = null))
-            homeDelegate.items = itemList
+            homeDelegate.items = homeViewmodel.memoryCache
+            Log.d("Cache", "onActivityCreated: ${homeViewmodel.memoryCache}")
+            homeViewmodel.loadComic("marvel",1)
 
         })
 
-        homeViewmodel.comicByTag.reObserve(this, Observer {
-            Timber.tag("tagg_").d("changes")
-            itemList.add(Home(id = 3,title = it.categoryName,
-                viewTypes = ViewTypes.COMIC,parentComic =  ParentComic(list = it.list),parentPublisher = null))
-
-            homeDelegate.items = itemList
-
-        })
+//        homeViewmodel.comicByTag.reObserve(this, Observer {
+//            itemList.add(Home(id = 3,title = it.categoryName,
+//                viewTypes = ViewTypes.COMIC,parentComic =  ParentComic(list = it.list),parentPublisher = null))
+//
+//            homeDelegate.items = itemList
+//        })
 
     }
 

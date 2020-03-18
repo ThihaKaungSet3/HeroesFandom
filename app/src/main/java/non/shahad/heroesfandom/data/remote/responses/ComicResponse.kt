@@ -1,6 +1,6 @@
 package non.shahad.heroesfandom.data.remote.responses
 
-import non.shahad.heroesfandom.domain.model.Comic
+import non.shahad.heroesfandom.data.local.entities.ComicEntity
 
 /**
  * Work around
@@ -8,6 +8,6 @@ import non.shahad.heroesfandom.domain.model.Comic
 data class ComicResponse(
     val categoryName : String,
     val page : Int,
-    val list: ArrayList<Comic>
+    val list: ArrayList<ComicEntity>
 ) {
 }

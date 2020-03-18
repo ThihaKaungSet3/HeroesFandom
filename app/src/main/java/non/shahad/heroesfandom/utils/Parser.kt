@@ -1,7 +1,7 @@
 package non.shahad.heroesfandom.utils
 
 import non.shahad.heroesfandom.data.remote.responses.ComicResponse
-import non.shahad.heroesfandom.domain.model.Comic
+import non.shahad.heroesfandom.data.local.entities.ComicEntity
 import okhttp3.ResponseBody
 import org.jsoup.Jsoup
 
@@ -11,7 +11,7 @@ object ComicPageParser{
         val articles = document.getElementsByTag("article")
         val totalPage = document.select("a.page-numbers").last().text()
         val categoryName = document.getElementsByClass("category-name").text()
-        val list : ArrayList<Comic> = arrayListOf()
+        val list : ArrayList<ComicEntity> = arrayListOf()
 
         articles.forEach {
             val postTitle = it.getElementsByClass("post-title")[0].text()
@@ -21,7 +21,7 @@ object ComicPageParser{
             val publishedDate = it.getElementsByTag("time").text()
 
             list.add(
-                Comic(
+                ComicEntity(
                     title = postTitle,
                     posterUrl = poster,
                     category = category,

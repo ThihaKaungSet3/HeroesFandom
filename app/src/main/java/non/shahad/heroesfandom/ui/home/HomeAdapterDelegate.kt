@@ -8,6 +8,8 @@ import non.shahad.heroesfandom.ui.home.publisher.PublisherAdapter
 import non.shahad.heroesfandom.ui.home.publisher.PublisherAdapterDelegate
 
 class HomeAdapterDelegate(context: Context) : AsyncListDifferDelegationAdapter<Home>(HomeDiffCallback){
+
+
     init {
         delegatesManager
             .addDelegate(ComicAdapterDelegate(context))

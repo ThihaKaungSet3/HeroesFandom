@@ -103,7 +103,7 @@ class HeroDetailFragment : Fragment() {
                     isFirstResource: Boolean
                 ): Boolean {
 
-                    val default = resources.getColor(R.color.default_colorpalette)
+                    val default = resources.getColor(R.color.colorPrimaryDark)
                     val dominentColor = ColorPalette.getDominentColor(resource!!,default)
                     viewBinding.heroesAppbar.setBackgroundColor(dominentColor)
                     viewBinding.heroesCollapsing.contentScrim = dominentColor.toDrawable()

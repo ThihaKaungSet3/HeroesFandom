@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#fcf9f9</color>
-    <color name="colorPrimaryDark">#7cbd1e</color>
-    <color name="colorAccent">#fcf9f9</color>
-    <color name="selected_color">#7cbd1e</color>
+    <color name="colorPrimary">#272121</color>
+    <color name="darkestGrey">#282828</color>
+    <color name="colorPrimaryDark">#e16428</color>
+    <color name="colorAccent">#f6e9e9</color>
+    <color name="grey_palette">#363333</color>
     <color name="not_selected_gray_color">#838383</color>
-    <color name="black">#000000</color>
-    <color name="default_colorpalette">#7cbd1e</color>
-    <color name="heroes_detail_text">#000000</color>
     <color name="gold">#FFD700</color>
+    <color name="tidal_grey">#45484D</color>
 </resources>

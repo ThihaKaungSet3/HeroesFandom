@@ -2,6 +2,7 @@ package non.shahad.heroesfandom.ui.heroes
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import android.widget.Toast
@@ -70,6 +71,7 @@ class HeroesFragment : BaseFragment(),HeroesAdapter.HeroSelectListener {
                 }
                 Status.SUCCESS -> {
                     viewBinding.progressBar.visibility = View.GONE
+                    Log.d("hero_", "onActivityCreated: ${it.data?.get(3)!!}")
                     heroAdapter.setHeroesList(it.data!!)
                 }
                 Status.ERROR -> {

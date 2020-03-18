@@ -17,6 +17,7 @@ import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
+import me.ibrahimsn.lib.OnItemSelectedListener
 import non.shahad.heroesfandom.R
 import non.shahad.heroesfandom.core.BaseActivity
 import non.shahad.heroesfandom.core.BaseFragment
@@ -44,7 +45,7 @@ class MainActivity : BaseActivity(),HasAndroidInjector,
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        changeStatusBarColor(R.color.black)
+//        changeStatusBarColor(R.color.colorPrimary)
         viewBinding = DataBindingUtil.setContentView(this,
             R.layout.activity_main
         )
@@ -92,32 +93,52 @@ class MainActivity : BaseActivity(),HasAndroidInjector,
     }
 
     private fun setUpBottomNav(){
-        viewBinding.bottomNavigationView.setOnNavigationItemSelectedListener {
-            when(it.itemId){
-                R.id.actionHome -> {
-                    navController.switchTab(Constants.BottomNav.INDEX_HOME)
-                    return@setOnNavigationItemSelectedListener true
-                }
-                R.id.actionMovies -> {
-                    navController.switchTab(Constants.BottomNav.INDEX_MOVIES)
-                    return@setOnNavigationItemSelectedListener true
-                }
-                R.id.actionHeroes -> {
-                    navController.switchTab(Constants.BottomNav.INDEX_HEROES)
-                    return@setOnNavigationItemSelectedListener true
-                }
-                R.id.actionLibrary -> {
-                    navController.switchTab(Constants.BottomNav.INDEX_LIBRARY)
-                    return@setOnNavigationItemSelectedListener true
+        viewBinding.smoothBottomBar.setOnItemSelectedListener(object : OnItemSelectedListener{
+            override fun onItemSelect(pos: Int) {
+                when(pos){
+                    Constants.BottomNav.INDEX_HOME -> {
+                        navController.switchTab(Constants.BottomNav.INDEX_HOME)
+                    }
+                    Constants.BottomNav.INDEX_MOVIES -> {
+                        navController.switchTab(Constants.BottomNav.INDEX_MOVIES)
+                    }
+                    Constants.BottomNav.INDEX_HEROES -> {
+                        navController.switchTab(Constants.BottomNav.INDEX_HEROES)
+                    }
+                    Constants.BottomNav.INDEX_LIBRARY -> {
+                        navController.switchTab(Constants.BottomNav.INDEX_LIBRARY)
+                    }
                 }
 
-                else -> return@setOnNavigationItemSelectedListener false
             }
-        }
 
-        viewBinding.bottomNavigationView.setOnNavigationItemReselectedListener {
-            Log.d("reselect","Reselect")
-        }
+        })
+//        viewBinding.bottomNavigationView.setOnNavigationItemSelectedListener {
+//            when(it.itemId){
+//                R.id.actionHome -> {
+//                    navController.switchTab(Constants.BottomNav.INDEX_HOME)
+//                    return@setOnNavigationItemSelectedListener true
+//                }
+//                R.id.actionMovies -> {
+//                    navController.switchTab(Constants.BottomNav.INDEX_MOVIES)
+//                    return@setOnNavigationItemSelectedListener true
+//                }
+//                R.id.actionHeroes -> {
+//                    navController.switchTab(Constants.BottomNav.INDEX_HEROES)
+//                    return@setOnNavigationItemSelectedListener true
+//                }
+//                R.id.actionLibrary -> {
+//                    navController.switchTab(Constants.BottomNav.INDEX_LIBRARY)
+//                    return@setOnNavigationItemSelectedListener true
+//                }
+//
+//                else -> return@setOnNavigationItemSelectedListener false
+//            }
+//        }
+//
+//        viewBinding.bottomNavigationView.setOnNavigationItemReselectedListener {
+//            Log.d("reselect","Reselect")
+//        }
     }
 
     override fun androidInjector(): AndroidInjector<Any> = dispatchingAndroidInjector
@@ -142,12 +163,12 @@ class MainActivity : BaseActivity(),HasAndroidInjector,
 
     override fun onTabTransaction(fragment: Fragment?, index: Int) {
         when(index){
-            Constants.BottomNav.INDEX_HOME -> viewBinding.bottomNavigationView.selectedItemId = R.id.actionHome
-            Constants.BottomNav.INDEX_MOVIES -> viewBinding.bottomNavigationView.selectedItemId = R.id.actionMovies
-            Constants.BottomNav.INDEX_HEROES -> viewBinding.bottomNavigationView.selectedItemId = R.id.actionHeroes
-            Constants.BottomNav.INDEX_LIBRARY -> viewBinding.bottomNavigationView.selectedItemId = R.id.actionLibrary
+            Constants.BottomNav.INDEX_HOME -> viewBinding.smoothBottomBar.setActiveItem(Constants.BottomNav.INDEX_HOME)
+            Constants.BottomNav.INDEX_MOVIES -> viewBinding.smoothBottomBar.setActiveItem(Constants.BottomNav.INDEX_MOVIES)
+            Constants.BottomNav.INDEX_HEROES -> viewBinding.smoothBottomBar.setActiveItem(Constants.BottomNav.INDEX_HEROES)
+            Constants.BottomNav.INDEX_LIBRARY -> viewBinding.smoothBottomBar.setActiveItem(Constants.BottomNav.INDEX_LIBRARY)
         }
-        Timber.tag("fragmentTransaction_").d("${viewBinding.bottomNavigationView.selectedItemId} Index : ${R.id.actionMovies}")
+
     }
 
     override fun pushFragment(fragment: Fragment, sharedElementList: List<Pair<View, String>>?) {

@@ -21,7 +21,7 @@ public class BannerLayoutManager extends LinearLayoutManager {
     private int mRealCount;
     private int mCurrentPosition = 0;
     private TaskHandler mHandler;
-    private long mTimeDelayed = 2500;
+    private long mTimeDelayed = 3000;
     private int mOrientation;
     private float mTimeSmooth = 150f;
 

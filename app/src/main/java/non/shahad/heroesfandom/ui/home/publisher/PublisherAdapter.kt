@@ -6,9 +6,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import non.shahad.heroesfandom.R
 import non.shahad.heroesfandom.databinding.ComicTypeChildItemBinding
-import non.shahad.heroesfandom.domain.model.Publisher
+import non.shahad.heroesfandom.data.local.entities.PublisherEntity
 
-class PublisherAdapter(private val publishers : List<Publisher>) : RecyclerView.Adapter<PublisherViewHolder>(){
+class PublisherAdapter(private val publisherEntities : List<PublisherEntity>) : RecyclerView.Adapter<PublisherViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PublisherViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -17,10 +17,10 @@ class PublisherAdapter(private val publishers : List<Publisher>) : RecyclerView.
         return PublisherViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = publishers.size
+    override fun getItemCount(): Int = publisherEntities.size
 
     override fun onBindViewHolder(holder: PublisherViewHolder, position: Int) {
-        holder.bind(publisher = publishers[position])
+        holder.bind(publisherEntity = publisherEntities[position])
     }
 
 }

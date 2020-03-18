@@ -8,37 +8,63 @@ import io.reactivex.disposables.CompositeDisposable
 import non.shahad.heroesfandom.data.remote.request.ComicByTagRequest
 import non.shahad.heroesfandom.data.remote.request.ComicRequest
 import non.shahad.heroesfandom.data.remote.responses.ComicResponse
-import non.shahad.heroesfandom.domain.model.Publisher
-import timber.log.Timber
+import non.shahad.heroesfandom.data.local.entities.PublisherEntity
+import non.shahad.heroesfandom.repositories.HomeRepository
+import non.shahad.heroesfandom.ui.home.models.Home
+import non.shahad.heroesfandom.ui.movies.models.MainMovies
 import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(
-    repository : Repository
+    val homeRepository : HomeRepository
 ) : ViewModel(){
 
+    val memoryCache = mutableListOf<Home>()
     private val compositeDisposable = CompositeDisposable()
-    var comicLiveData : LiveData<ComicResponse>
-    var publisherLiveData : LiveData<List<Publisher>>
-    var comicByTag : LiveData<ComicResponse>
+    var comicLiveData : LiveData<Home>
+    var publisherEntityLiveData : LiveData<List<PublisherEntity>>
+//    var comicByTag : LiveData<ComicResponse>
 
     private val fetchPublisher : MutableLiveData<Boolean> = MutableLiveData()
     private val comicPageLiveData : MutableLiveData<ComicRequest> = MutableLiveData()
     private val comicbyTagLiveData : MutableLiveData<ComicByTagRequest> = MutableLiveData()
 
     init {
-        this.publisherLiveData = Transformations.switchMap(fetchPublisher){ fetch ->
-            repository.getPublishers()
+        this.publisherEntityLiveData = Transformations.switchMap(fetchPublisher){ fetch ->
+            homeRepository.getPublisherS()
         }
 
         this.comicLiveData = Transformations.switchMap(comicPageLiveData){ request ->
-            Timber.tag("tagg_").d("changes comic")
-            repository.getComicsByUniverse(request.universe,request.page)
+            homeRepository.getMarvelComics(request.page)
         }
+//
+//        this.comicByTag = Transformations.switchMap(comicbyTagLiveData){request ->
+//            homeRepository.getComicsByTag(request.name,request.page)
+//        }
 
-        this.comicByTag = Transformations.switchMap(comicbyTagLiveData){request ->
-            Timber.tag("tagg_").d("changes tag")
-            repository.getComicsByTag(request.name,request.page)
+
+    }
+
+    fun addComic(comic: Home){
+        memoryCache.add(comic)
+    }
+
+    fun addComicList(list: List<Home>){
+        memoryCache.addAll(list)
+    }
+
+    fun clearList(){
+        memoryCache.clear()
+    }
+
+    fun isAlreadyContain(list: List<Home>) : Boolean{
+        memoryCache.forEach{cache ->
+            list.forEach{ movie ->
+                if (movie.id == cache.id){
+                    return true
+                }
+            }
         }
+        return false
     }
 
 

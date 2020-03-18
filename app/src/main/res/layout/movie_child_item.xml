@@ -16,6 +16,7 @@
             android:layout_width="148dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
+            android:background="@color/colorPrimary"
             android:elevation="0dp">
 
             <androidx.cardview.widget.CardView
@@ -55,7 +56,7 @@
                 android:maxLines="1"
                 android:fontFamily="@font/alatsi_family"
                 android:text="@{movie.title}"
-                android:textColor="@color/black"
+                android:textColor="@color/colorAccent"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardView" />
@@ -77,6 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:text="@{String.valueOf(movie.vote_average)}"
+                android:textColor="@color/colorAccent"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageView"

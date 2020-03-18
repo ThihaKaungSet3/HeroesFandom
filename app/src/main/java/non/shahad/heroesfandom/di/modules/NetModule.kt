@@ -3,10 +3,7 @@ package non.shahad.heroesfandom.di.modules
 import dagger.Module
 import dagger.Provides
 import non.shahad.heroesfandom.core.Constants
-import non.shahad.heroesfandom.data.remote.GetComicAPI
-import non.shahad.heroesfandom.data.remote.MoviesAPI
-import non.shahad.heroesfandom.data.remote.RequestInterceptor
-import non.shahad.heroesfandom.data.remote.SuperHeroAPI
+import non.shahad.heroesfandom.data.remote.*
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -51,5 +48,13 @@ class NetModule {
             .client(okHttpClientBuilder.build())
             .build()
             .create(GetComicAPI::class.java)
+
+    @Singleton
+    @Provides
+    fun providePublisherAPI(retrofit: Retrofit.Builder,okHttpClientBuilder: OkHttpClient.Builder) : PublisherAPI =
+        retrofit.baseUrl(Constants.NetworkService.PUBLISHER_API)
+            .client(okHttpClientBuilder.build())
+            .build()
+            .create(PublisherAPI::class.java)
 
 }

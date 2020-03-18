@@ -14,7 +14,7 @@
         android:id="@+id/toolbar2"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
+        android:background="@color/grey_palette"
         app:title=""
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/heroes"
-            android:textColor="@color/black"
+            android:textColor="@color/colorAccent"
             android:fontFamily="@font/josefinsans_family"
             android:gravity="center"
             android:textSize="22sp"/>
@@ -41,7 +41,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/heroesRecyclerView"
         app:layout_constraintTop_toTopOf="parent"
-        android:indeterminateTint="@color/selected_color"
+        android:indeterminateTint="@color/colorPrimaryDark"
         android:indeterminateTintMode="src_atop"/>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -49,6 +49,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="0dp"
+        android:background="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

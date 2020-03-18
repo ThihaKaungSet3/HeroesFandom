@@ -1,39 +1,70 @@
 package non.shahad.heroesfandom.ui.movies
 
 import androidx.lifecycle.*
-import non.shahad.heroesfandom.data.local.entities.MovieEntity
+import non.shahad.heroesfandom.core.Constants
 import non.shahad.heroesfandom.repositories.MoviesRepository
+import non.shahad.heroesfandom.ui.movies.models.MainMovies
 import non.shahad.heroesfandom.utils.domain.Resource
-import timber.log.Timber
+import java.util.ArrayList
 import javax.inject.Inject
 
 class MoviesViewModel @Inject constructor(
-    val moviesRepository: MoviesRepository
+    private val moviesRepository: MoviesRepository
 ) : ViewModel(){
 
     private val moviePageLiveData : MutableLiveData<Int> = MutableLiveData()
-    val movieListLiveData : LiveData<Resource<List<MovieEntity>>>
+
+    val memoryCache : MutableList<MainMovies> = ArrayList()
+
+    var discoverMovieLiveData : LiveData<Resource<List<MainMovies>>>
+    var discoverPageLiveData : MutableLiveData<Int> =  MutableLiveData()
+//    var heroesLivedata : LiveData<List<MovieEntity>>
+    var trendingLiveData : LiveData<Resource<List<MainMovies>>>
+
 
     var currentPage : MutableLiveData<Int> = MutableLiveData()
+    var shouldFetchTrending : MutableLiveData<Boolean> = MutableLiveData()
 
-//    val movies = MediatorLiveData<Resource<List<MovieEntity>>>()
 
     init {
-        this.movieListLiveData = Transformations.switchMap(moviePageLiveData) { page ->
-            moviesRepository.loadMovies(page)
+        this.discoverMovieLiveData = Transformations.switchMap(discoverPageLiveData){
+            moviesRepository.loadMoviesByCategoryName(Constants.NetworkService.DISCOVER,it)
+        }
+//        this.heroesLivedata = Transformations.switchMap(moviePageLiveData){
+//            moviesRepository.loadMoviesByCategoryName(it)
+//        }
+
+        this.trendingLiveData = Transformations.switchMap(shouldFetchTrending){
+            moviesRepository.loadTrendingMovies()
         }
 
         this.currentPage.value = 1
     }
 
-    fun loadMovies(page : Int) : LiveData<Resource<List<MovieEntity>>> {
-        return moviesRepository.loadMovies(page)
+    fun addMovies(list: List<MainMovies>){
+        memoryCache.addAll(list)
     }
 
-    fun loadTrendingMovies() : LiveData<List<MovieEntity>> = moviesRepository.loadTrendingMovies()
+    fun clearList(){
+        memoryCache.clear()
+    }
 
-    fun isLoading() = moviesRepository.isLoading
+     fun isAlreadyContain(list: List<MainMovies>) : Boolean{
+        memoryCache.forEach{cache ->
+            list.forEach{ movie ->
+                if (movie.id == cache.id){
+                    return true
+                }
+            }
+        }
+        return false
+    }
 
+    fun loadDiscoverMovie(page: Int) = this.discoverPageLiveData.postValue(page)
+    fun fetchTrendingMovies() = this.shouldFetchTrending.postValue(true)
     fun postMoviePage(page : Int) = this.moviePageLiveData.postValue(page)
+
+
+
 
 }
