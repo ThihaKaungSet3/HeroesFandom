@@ -45,17 +45,6 @@ class MoviesFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         moviesViewModel = ViewModelProviders.of(this,viewModelFactory).get(MoviesViewModel::class.java)
-        moviesViewModel.postMoviePage(1)
-
-
-//        moviesViewModel.heroesLivedata.reObserve(this, Observer {
-//            val bannerList = moviesViewModel.prepareMoviesForBanner(it)
-//            itemList.add(MainMovies(1,ViewTypes.BANNER,null,bannerList))
-//            itemList.add(MainMovies(2,ViewTypes.MOVIES,it,null,"Discover"))
-//            moviesViewModel.fetchTrendingMovies()
-//        })
-//
-
 
 
     }
@@ -79,51 +68,15 @@ class MoviesFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        moviesViewModel.loadDiscoverMovie(2)
 
-        /**
-         * First load Discover
-         */
-        moviesViewModel.discoverMovieLiveData.reObserve(this, Observer {
+        moviesViewModel.loadMoviesForView().observe(viewLifecycleOwner, Observer {
             when(it.status){
-                Status.LOADING -> {
-//                    viewBinding.progressBar.visibility = View.VISIBLE
-                }
+                Status.LOADING -> {}
+                Status.ERROR -> {}
                 Status.SUCCESS -> {
-                    moviesViewModel.clearList()
-                    moviesViewModel.addMovies(it.data!!)
-
-                    adapterDelegate.items = moviesViewModel.memoryCache
-                    moviesViewModel.fetchTrendingMovies()
-                }
-
-                Status.ERROR -> {
-                    Toast.makeText(context,"Something went wrong", Toast.LENGTH_SHORT).show()
+                    adapterDelegate.items = it.data!!
                 }
             }
-        })
-
-        /**
-         * Second Load Trending
-         */
-        moviesViewModel.trendingLiveData.reObserve(this, Observer {
-            when(it.status){
-                Status.LOADING -> {
-//                    viewBinding.progressBar.visibility = View.VISIBLE
-                }
-                Status.SUCCESS -> {
-                    if (!moviesViewModel.isAlreadyContain(it.data!!)){
-                        moviesViewModel.addMovies(it.data!!)
-                    }
-
-                    adapterDelegate.items = moviesViewModel.memoryCache
-                }
-
-                Status.ERROR -> {
-                    Toast.makeText(context,"Something went wrong", Toast.LENGTH_SHORT).show()
-                }
-            }
-
         })
 
     }

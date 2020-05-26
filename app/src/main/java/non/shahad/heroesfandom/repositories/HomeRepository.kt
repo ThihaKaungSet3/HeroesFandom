@@ -8,6 +8,8 @@ import io.reactivex.Observer
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.functions.BiFunction
+import io.reactivex.functions.Function3
 import io.reactivex.schedulers.Schedulers
 import non.shahad.heroesfandom.core.ViewTypes
 import non.shahad.heroesfandom.data.local.entities.ComicEntity
@@ -18,112 +20,76 @@ import non.shahad.heroesfandom.data.local.entities.PublisherEntity
 import non.shahad.heroesfandom.domain.usecases.HomeUseCase
 import non.shahad.heroesfandom.ui.home.models.Home
 import non.shahad.heroesfandom.ui.home.models.ParentComic
+import non.shahad.heroesfandom.ui.home.models.ParentPublisher
 import non.shahad.heroesfandom.utils.ComicPageParser
+import non.shahad.heroesfandom.utils.domain.Resource
 import okhttp3.ResponseBody
 import javax.inject.Inject
 
 class HomeRepository @Inject constructor(
-    private val homeUseCase: HomeUseCase
+    private val homeUseCase: HomeUseCase,
+    private val api: GetComicAPI,
+    private val publisherAPI: PublisherAPI
 ){
     private var disposable : Disposable? = null
 
-//    fun getComicsByUniverse(universe : String,page : Int) : MutableLiveData<ComicResponse>{
-//        val comicResponse = MutableLiveData<ComicResponse>()
-//         comicAPI.getComicsByUniverse(universe,page)
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribeOn(Schedulers.io())
-//            .subscribe(object : SingleObserver<ResponseBody>{
-//                override fun onSuccess(t: ResponseBody) {
-//                    comicResponse.value = ComicPageParser.parse(t)
-//                    disposable?.dispose()
-//                }
-//
-//                override fun onSubscribe(d: Disposable) {
-//                    disposable = d
-//                }
-//
-//                override fun onError(e: Throwable) {
-//                    disposable?.dispose()
-//                }
-//            })
-//        return comicResponse
-//    }
+    /**
+     * Load publisher
+     * Load marvel comics
+     * Load Dc Comics
+     */
+    fun getHomeData() : LiveData<Resource<List<Home>>> {
+        val liveData = MutableLiveData<Resource<List<Home>>>()
+        val publisers = publisherAPI.getAllPublishers()
+        val marvel = api.getComicsByUniverse("marvel",1)
+        val dc = api.getComicsByTag("dc-week",2)
+        Observable.zip(
+            publisers,
+            marvel,
+            dc,
+            Function3<List<PublisherEntity>,ResponseBody,ResponseBody,List<Home>> { t1, t2, t3 ->
+                val marvel = ComicPageParser.parse(t2)
+                val dc = ComicPageParser.parse(t3)
 
-    fun getPublisherS() : LiveData<List<PublisherEntity>>{
-        val publishers = MutableLiveData<List<PublisherEntity>>()
-
-        Observable.concat(
-            homeUseCase.getLocalPublishers(),
-            homeUseCase.getRemotePublishers()
-        ).observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Observer<List<PublisherEntity>>{
-                override fun onComplete() {
-
-                }
-
-                override fun onSubscribe(d: Disposable) {
-                    disposable = d
-                }
-
-                override fun onNext(t: List<PublisherEntity>) {
-                    Log.d("Disposable", "onComplete: ${t}")
-                    publishers.postValue(t)
-                }
-
-                override fun onError(e: Throwable) {
-                    disposable?.dispose()
-                }
-
+                return@Function3 listOf<Home>(
+                    Home(
+                        id = 1,
+                        title = "Publishers",
+                        viewTypes = ViewTypes.PUBLISHER,
+                        parentPublisher = ParentPublisher(list = t1),
+                        parentComic = null
+                    ),
+                    Home(2, ViewTypes.COMIC, ParentComic("Marvel", marvel.list), null, "Marvel"),
+                    Home(3, ViewTypes.COMIC, ParentComic("DC", dc.list), null, "DC")
+                )
             })
-        return publishers
-    }
-
-    fun getMarvelComics(page : Int) : LiveData<Home>{
-        val comicResponse = MutableLiveData<Home>()
-
-        Observable.concat(
-            homeUseCase.getLocalComicByUniverse("marvel",page),
-            homeUseCase.getRemoteComicByUniverse("marvel",page)
-        )
-            .subscribe(object : Observer<List<ComicEntity>>{
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : Observer<List<Home>> {
                 override fun onComplete() {
                     disposable?.dispose()
                 }
 
                 override fun onSubscribe(d: Disposable) {
+                    liveData.postValue(Resource.loading(null))
                     disposable = d
                 }
 
-                override fun onNext(t: List<ComicEntity>) {
-                    Log.d("UUU", "onActivityCreated: $t")
-                    comicResponse.postValue(
-                        Home(2,ViewTypes.COMIC, ParentComic("Marvel",t),null,"Marvel"))
-
+                override fun onNext(t: List<Home>) {
+                    liveData.postValue(Resource.success(t))
+                    disposable?.dispose()
                 }
 
                 override fun onError(e: Throwable) {
+                    liveData.postValue(Resource.error(e.message!!,null))
                     disposable?.dispose()
                 }
 
             })
-        return comicResponse
+
+        return liveData
     }
 
-
-//    fun getPublishers() : LiveData<List<Publisher>>{
-//        val publisherLiveData : MutableLiveData<List<Publisher>> = MutableLiveData()
-//
-//        publisherLiveData.value = listOf(
-//            Publisher("marvel","https://cdn.iconscout.com/icon/free/png-256/marvel-282124.png"),
-//            Publisher("DC","https://cdn.vox-cdn.com/thumbor/qyUvhWQpC61vjDAf7Qgb95q0WdY=/0x64:1600x1131/1200x800/filters:focal(0x64:1600x1131)/cdn.vox-cdn.com/uploads/chorus_image/image/49612017/DC_Logo_Blue_Final_573b356bd056a9.41641801.0.0.jpg"),
-//            Publisher("imageComics","https://thenextissuepodcast.files.wordpress.com/2018/03/image-comics-logo.jpg"),
-//            Publisher("2000AD","https://www.google.com/url?sa=i&source=images&cd=&ved=2ahUKEwja-_fRwqbnAhWXIbcAHVqmBvAQjRx6BAgBEAQ&url=https%3A%2F%2F"),
-//            Publisher("aftershock","https://i2.wp.com/www.comicsbeat.com/wp-content/uploads/2018/08/asc_logo_url.png?fit=1000%2C1000&ssl=1")
-//
-//        )
-//
-//        return publisherLiveData
-//    }
 
 
 }

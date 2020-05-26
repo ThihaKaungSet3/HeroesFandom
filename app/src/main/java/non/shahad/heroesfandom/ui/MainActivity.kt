@@ -80,7 +80,7 @@ class MainActivity : BaseActivity(),HasAndroidInjector,
         navController.apply {
             transactionListener = this@MainActivity
             rootFragmentListener = this@MainActivity
-            createEager = true
+            createEager = false
             fragNavLogger = object : FragNavLogger {
                 override fun error(message: String, throwable: Throwable) {
 
@@ -113,32 +113,7 @@ class MainActivity : BaseActivity(),HasAndroidInjector,
             }
 
         })
-//        viewBinding.bottomNavigationView.setOnNavigationItemSelectedListener {
-//            when(it.itemId){
-//                R.id.actionHome -> {
-//                    navController.switchTab(Constants.BottomNav.INDEX_HOME)
-//                    return@setOnNavigationItemSelectedListener true
-//                }
-//                R.id.actionMovies -> {
-//                    navController.switchTab(Constants.BottomNav.INDEX_MOVIES)
-//                    return@setOnNavigationItemSelectedListener true
-//                }
-//                R.id.actionHeroes -> {
-//                    navController.switchTab(Constants.BottomNav.INDEX_HEROES)
-//                    return@setOnNavigationItemSelectedListener true
-//                }
-//                R.id.actionLibrary -> {
-//                    navController.switchTab(Constants.BottomNav.INDEX_LIBRARY)
-//                    return@setOnNavigationItemSelectedListener true
-//                }
-//
-//                else -> return@setOnNavigationItemSelectedListener false
-//            }
-//        }
-//
-//        viewBinding.bottomNavigationView.setOnNavigationItemReselectedListener {
-//            Log.d("reselect","Reselect")
-//        }
+
     }
 
     override fun androidInjector(): AndroidInjector<Any> = dispatchingAndroidInjector

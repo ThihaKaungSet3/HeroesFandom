@@ -40,7 +40,7 @@ class MovieUseCase @Inject constructor(
 
     fun getRemoteMoviesByCategoryName(name: String,
                                       page : Int) : Observable<List<MovieEntity>>{
-        return moviesAPI.getTrendingMovies()
+        return moviesAPI.getDiscoverMovies(1)
             .map {
                 val results = it.results
             for (movie in results){

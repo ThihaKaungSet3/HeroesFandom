@@ -12,57 +12,11 @@ class MoviesViewModel @Inject constructor(
     private val moviesRepository: MoviesRepository
 ) : ViewModel(){
 
-    private val moviePageLiveData : MutableLiveData<Int> = MutableLiveData()
 
-    val memoryCache : MutableList<MainMovies> = ArrayList()
-
-    var discoverMovieLiveData : LiveData<Resource<List<MainMovies>>>
-    var discoverPageLiveData : MutableLiveData<Int> =  MutableLiveData()
-//    var heroesLivedata : LiveData<List<MovieEntity>>
-    var trendingLiveData : LiveData<Resource<List<MainMovies>>>
-
-
-    var currentPage : MutableLiveData<Int> = MutableLiveData()
-    var shouldFetchTrending : MutableLiveData<Boolean> = MutableLiveData()
-
-
-    init {
-        this.discoverMovieLiveData = Transformations.switchMap(discoverPageLiveData){
-            moviesRepository.loadMoviesByCategoryName(Constants.NetworkService.DISCOVER,it)
-        }
-//        this.heroesLivedata = Transformations.switchMap(moviePageLiveData){
-//            moviesRepository.loadMoviesByCategoryName(it)
-//        }
-
-        this.trendingLiveData = Transformations.switchMap(shouldFetchTrending){
-            moviesRepository.loadTrendingMovies()
-        }
-
-        this.currentPage.value = 1
+    fun loadMoviesForView() : LiveData<Resource<List<MainMovies>>> {
+        return moviesRepository.loadReadyMovies()
     }
 
-    fun addMovies(list: List<MainMovies>){
-        memoryCache.addAll(list)
-    }
-
-    fun clearList(){
-        memoryCache.clear()
-    }
-
-     fun isAlreadyContain(list: List<MainMovies>) : Boolean{
-        memoryCache.forEach{cache ->
-            list.forEach{ movie ->
-                if (movie.id == cache.id){
-                    return true
-                }
-            }
-        }
-        return false
-    }
-
-    fun loadDiscoverMovie(page: Int) = this.discoverPageLiveData.postValue(page)
-    fun fetchTrendingMovies() = this.shouldFetchTrending.postValue(true)
-    fun postMoviePage(page : Int) = this.moviePageLiveData.postValue(page)
 
 
 
