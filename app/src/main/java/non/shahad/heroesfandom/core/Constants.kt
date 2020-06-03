@@ -2,6 +2,7 @@ package non.shahad.heroesfandom.core
 
 object Constants {
     object NetworkService {
+        const val FANDOMURL = "https://heroesfandom.herokuapp.com/"
         const val SUPERHEROAPI_URL = "https://cdn.rawgit.com/"
         const val MOVIESAPI_URL = "https://api.themoviedb.org/3/"
         const val GETCOMIC_URL = "https://getcomics.info/"

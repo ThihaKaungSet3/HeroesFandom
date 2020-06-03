@@ -1,7 +1,7 @@
 package non.shahad.heroesfandom.ui.heroes
 
 import androidx.lifecycle.*
-import non.shahad.heroesfandom.data.local.entities.HeroEntity
+import non.shahad.heroesfandom.data.db.entities.HeroEntity
 import non.shahad.heroesfandom.repositories.HeroesRepository
 import non.shahad.heroesfandom.utils.domain.Resource
 import timber.log.Timber

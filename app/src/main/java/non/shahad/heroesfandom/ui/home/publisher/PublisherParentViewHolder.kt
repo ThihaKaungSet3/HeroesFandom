@@ -3,9 +3,7 @@ package non.shahad.heroesfandom.ui.home.publisher
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import non.shahad.heroesfandom.databinding.ComicTypeParentItemBinding
-import non.shahad.heroesfandom.ui.home.comic.ComicAdapter
-import non.shahad.heroesfandom.ui.home.models.ParentComic
-import non.shahad.heroesfandom.ui.home.models.ParentPublisher
+import non.shahad.heroesfandom.data.models.ParentPublisher
 
 class PublisherParentViewHolder(private val binding : ComicTypeParentItemBinding) : RecyclerView.ViewHolder(binding.root){
     fun bind(parentPublisher: ParentPublisher){

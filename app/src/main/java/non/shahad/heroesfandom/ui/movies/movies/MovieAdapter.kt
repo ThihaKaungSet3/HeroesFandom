@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import non.shahad.heroesfandom.R
-import non.shahad.heroesfandom.data.local.entities.MovieEntity
+import non.shahad.heroesfandom.data.db.entities.MovieEntity
 import non.shahad.heroesfandom.databinding.MovieChildItemBinding
 
 class MovieAdapter(val movieList : List<MovieEntity>) : RecyclerView.Adapter<MovieChildViewHolder>(){

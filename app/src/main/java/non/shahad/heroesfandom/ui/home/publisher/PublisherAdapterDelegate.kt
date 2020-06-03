@@ -1,27 +1,18 @@
 package non.shahad.heroesfandom.ui.home.publisher
 
-import android.content.Context
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
 import non.shahad.heroesfandom.R
 import non.shahad.heroesfandom.core.ViewTypes
-import non.shahad.heroesfandom.databinding.ComicParentItemBinding
 import non.shahad.heroesfandom.databinding.ComicTypeParentItemBinding
-import non.shahad.heroesfandom.ui.home.comic.ComicParentViewHolder
-import non.shahad.heroesfandom.ui.home.models.Home
+import non.shahad.heroesfandom.data.models.Home
+import non.shahad.heroesfandom.utils.extensions.bindedView
 
-class PublisherAdapterDelegate(context : Context) : AdapterDelegate<List<Home>> (){
-
-    private val inflater = LayoutInflater.from(context)
+class PublisherAdapterDelegate() : AdapterDelegate<List<Home>> (){
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
-        val binding : ComicTypeParentItemBinding = DataBindingUtil.inflate(inflater,
-            R.layout.comic_type_parent_item,parent,false)
-
-        return PublisherParentViewHolder(binding)
+        return PublisherParentViewHolder(bindedView(parent,R.layout.comic_type_parent_item) as ComicTypeParentItemBinding)
     }
 
     override fun isForViewType(items: List<Home>, position: Int): Boolean {

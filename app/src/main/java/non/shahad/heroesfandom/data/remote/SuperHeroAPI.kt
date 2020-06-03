@@ -1,7 +1,7 @@
 package non.shahad.heroesfandom.data.remote
 
 import io.reactivex.Single
-import non.shahad.heroesfandom.data.local.entities.HeroEntity
+import non.shahad.heroesfandom.data.db.entities.HeroEntity
 import retrofit2.http.GET
 
 interface SuperHeroAPI {

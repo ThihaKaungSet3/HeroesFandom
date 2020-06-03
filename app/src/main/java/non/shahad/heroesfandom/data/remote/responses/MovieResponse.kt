@@ -1,7 +1,7 @@
 package non.shahad.heroesfandom.data.remote.responses
 
 import com.google.gson.annotations.SerializedName
-import non.shahad.heroesfandom.data.local.entities.MovieEntity
+import non.shahad.heroesfandom.data.db.entities.MovieEntity
 
 data class MovieResponse(
     @SerializedName("page")var page: Int,

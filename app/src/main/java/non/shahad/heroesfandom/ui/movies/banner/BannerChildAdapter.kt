@@ -2,24 +2,23 @@ package non.shahad.heroesfandom.ui.movies.banner
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.RecyclerView
+import com.smarteist.autoimageslider.SliderViewAdapter
 import non.shahad.heroesfandom.R
+import non.shahad.heroesfandom.data.db.entities.MovieNewsEntity
 import non.shahad.heroesfandom.databinding.BannerChildItemBinding
-import non.shahad.heroesfandom.ui.movies.models.Banner
+import non.shahad.heroesfandom.data.models.Banner
+import non.shahad.heroesfandom.utils.extensions.bindedView
 
-class BannerChildAdapter(private val bannerItems : List<Banner>) : RecyclerView.Adapter<BannerChildViewHolder>() {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BannerChildViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        val binding : BannerChildItemBinding = DataBindingUtil.inflate(inflater,
-            R.layout.banner_child_item,parent,false)
-        return BannerChildViewHolder(binding)
-    }
-
-    override fun getItemCount(): Int = bannerItems.size
+class BannerChildAdapter(private val bannerItems : List<MovieNewsEntity>) : SliderViewAdapter<BannerChildViewHolder>() {
 
     override fun onBindViewHolder(holderChild: BannerChildViewHolder, position: Int) {
         holderChild.bind(bannerItems[position])
     }
+
+    override fun onCreateViewHolder(parent: ViewGroup?): BannerChildViewHolder {
+        val inflater = LayoutInflater.from(parent?.context)
+        return BannerChildViewHolder(bindedView(parent!!,R.layout.banner_child_item) as BannerChildItemBinding)
+    }
+
+    override fun getCount(): Int = bannerItems.size
 }

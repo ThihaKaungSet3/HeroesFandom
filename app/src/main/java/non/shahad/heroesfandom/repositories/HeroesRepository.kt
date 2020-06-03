@@ -3,8 +3,8 @@ package non.shahad.heroesfandom.repositories
 import androidx.lifecycle.LiveData
 import io.reactivex.Single
 import non.shahad.heroesfandom.core.Constants
-import non.shahad.heroesfandom.data.local.daos.SuperHeroDao
-import non.shahad.heroesfandom.data.local.entities.HeroEntity
+import non.shahad.heroesfandom.data.db.daos.SuperHeroDao
+import non.shahad.heroesfandom.data.db.entities.HeroEntity
 import non.shahad.heroesfandom.data.remote.SuperHeroAPI
 import non.shahad.heroesfandom.utils.domain.RateLimiter
 import non.shahad.heroesfandom.utils.domain.Resource

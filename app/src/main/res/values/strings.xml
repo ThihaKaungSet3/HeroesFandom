@@ -25,6 +25,10 @@
 		aliquet quis orci. Curabitur maximus augue ut bibendum sagittis.
 	</string>
 
+<!--	Movies-->
+	<string name="see_more">See more</string>
+
+<!--	Heroes-->
 	<string name="intelligence">Intelligence</string>
 	<string name="strength">Strength</string>
 	<string name="speed">Speed</string>

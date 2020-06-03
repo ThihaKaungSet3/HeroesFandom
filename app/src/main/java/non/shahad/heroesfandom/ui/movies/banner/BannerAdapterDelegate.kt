@@ -9,8 +9,7 @@ import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
 import non.shahad.heroesfandom.R
 import non.shahad.heroesfandom.core.ViewTypes
 import non.shahad.heroesfandom.databinding.BannerParentItemBinding
-import non.shahad.heroesfandom.ui.movies.models.Banner
-import non.shahad.heroesfandom.ui.movies.models.MainMovies
+import non.shahad.heroesfandom.data.models.MainMovies
 
 class BannerAdapterDelegate(val context : Context) : AdapterDelegate<List<MainMovies>>(){
     private val inflater = LayoutInflater.from(context)
@@ -22,7 +21,7 @@ class BannerAdapterDelegate(val context : Context) : AdapterDelegate<List<MainMo
     }
 
     override fun isForViewType(items: List<MainMovies>, position: Int): Boolean {
-        return position == 0 || items[position].viewTypes == ViewTypes.BANNER
+        return position == 0 || items[position].viewTypes == ViewTypes.NEWS
     }
 
     override fun onBindViewHolder(
@@ -31,7 +30,7 @@ class BannerAdapterDelegate(val context : Context) : AdapterDelegate<List<MainMo
         holder: RecyclerView.ViewHolder,
         payloads: MutableList<Any>
     ) {
-        (holder as BannerParentViewHolder).bind(items[position].bannerItemList!!)
+        (holder as BannerParentViewHolder).bind(items[position].newsItemList!!)
     }
 
 

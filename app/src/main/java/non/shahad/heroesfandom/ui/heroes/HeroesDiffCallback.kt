@@ -1,7 +1,7 @@
 package non.shahad.heroesfandom.ui.heroes
 
 import androidx.recyclerview.widget.DiffUtil
-import non.shahad.heroesfandom.data.local.entities.HeroEntity
+import non.shahad.heroesfandom.data.db.entities.HeroEntity
 
 class HeroesDiffCallback(
     private val oldList : List<HeroEntity>,

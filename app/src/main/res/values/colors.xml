@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#272121</color>
-    <color name="darkestGrey">#282828</color>
-    <color name="colorPrimaryDark">#e16428</color>
+    <color name="colorPrimary">#121212</color>
+    <color name="colorPrimaryDark">#B02531</color>
     <color name="colorAccent">#f6e9e9</color>
+
+<!--    Grey palette-->
+    <color name="dark_slate_grey">#26242C</color>
+    <color name="basic_grey">#b3b3b3</color>
+    <color name="darker_grey">#535353</color>
+    <color name="darkestGrey">#212121</color>
     <color name="grey_palette">#363333</color>
     <color name="not_selected_gray_color">#838383</color>
-    <color name="gold">#FFD700</color>
     <color name="tidal_grey">#45484D</color>
 </resources>

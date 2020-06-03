@@ -5,4 +5,8 @@ enum class ViewTypes {
     PUBLISHER,
     BANNER,
     MOVIES,
+    NEWS,
+    SCIENCE,
+    ANIME,
+    GAMING
 }

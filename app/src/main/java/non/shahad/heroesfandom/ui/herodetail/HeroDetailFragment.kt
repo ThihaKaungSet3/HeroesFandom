@@ -1,32 +1,23 @@
 package non.shahad.heroesfandom.ui.herodetail
 
 
-import android.content.res.ColorStateList
-import android.graphics.ColorFilter
-import android.graphics.PorterDuff
-import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.transition.TransitionInflater
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import android.widget.Toolbar
 import androidx.core.graphics.drawable.toDrawable
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
-import kotlinx.android.synthetic.main.fragment_hero_detail.view.*
 import non.shahad.heroesfandom.R
-import non.shahad.heroesfandom.data.local.entities.HeroEntity
+import non.shahad.heroesfandom.data.db.entities.HeroEntity
 import non.shahad.heroesfandom.databinding.FragmentHeroDetailBinding
 import non.shahad.heroesfandom.ui.MainActivity
-import non.shahad.heroesfandom.ui.heroes.HeroesFragment
 import non.shahad.heroesfandom.utils.ColorPalette
 import timber.log.Timber
 

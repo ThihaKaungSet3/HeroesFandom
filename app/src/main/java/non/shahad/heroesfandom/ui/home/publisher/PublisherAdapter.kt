@@ -6,7 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import non.shahad.heroesfandom.R
 import non.shahad.heroesfandom.databinding.ComicTypeChildItemBinding
-import non.shahad.heroesfandom.data.local.entities.PublisherEntity
+import non.shahad.heroesfandom.data.db.entities.PublisherEntity
 
 class PublisherAdapter(private val publisherEntities : List<PublisherEntity>) : RecyclerView.Adapter<PublisherViewHolder>(){
 

@@ -1,36 +1,24 @@
 package non.shahad.heroesfandom.ui.movies
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.coroutines.InternalCoroutinesApi
 import non.shahad.heroesfandom.R
 import non.shahad.heroesfandom.core.BaseFragment
-import non.shahad.heroesfandom.core.ViewTypes
 import non.shahad.heroesfandom.databinding.FragmentMoviesBinding
-import non.shahad.heroesfandom.di.ViewModelFactory
-import non.shahad.heroesfandom.ui.movies.models.Banner
-import non.shahad.heroesfandom.ui.movies.models.MainMovies
 import non.shahad.heroesfandom.utils.domain.Status
-import non.shahad.heroesfandom.utils.extensions.reObserve
-import timber.log.Timber
-import java.util.ArrayList
-import javax.inject.Inject
-import kotlin.math.log
+import non.shahad.heroesfandom.utils.extensions.timber
 
 class MoviesFragment : BaseFragment() {
 
-    private lateinit var moviesViewModel: MoviesViewModel
-    @Inject
-    lateinit var viewModelFactory : ViewModelFactory
+    private val moviesViewModel by injectViewModels<MoviesViewModel>()
+
     private lateinit var viewBinding : FragmentMoviesBinding
-    private lateinit var adapterDelegate : MainMovieDelegateAdapter
+    private lateinit var adapterDelegate : MainMovieAdapterDelegation
 
 
     override fun onCreateView(
@@ -42,22 +30,16 @@ class MoviesFragment : BaseFragment() {
         return viewBinding.root
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        moviesViewModel = ViewModelProviders.of(this,viewModelFactory).get(MoviesViewModel::class.java)
-
-
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        retainInstance = true
         setUpRecyclerView()
-
 
     }
 
     private fun setUpRecyclerView(){
-        adapterDelegate = MainMovieDelegateAdapter(context!!)
+        adapterDelegate = MainMovieAdapterDelegation(context!!)
 
         viewBinding.movieMainRecycler.apply {
             layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
@@ -66,13 +48,16 @@ class MoviesFragment : BaseFragment() {
         }
     }
 
+    @InternalCoroutinesApi
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
         moviesViewModel.loadMoviesForView().observe(viewLifecycleOwner, Observer {
             when(it.status){
                 Status.LOADING -> {}
-                Status.ERROR -> {}
+                Status.ERROR -> {
+                    timber("Movie_","${it.message!!}")
+                }
                 Status.SUCCESS -> {
                     adapterDelegate.items = it.data!!
                 }

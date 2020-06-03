@@ -28,4 +28,5 @@ Project for super heroes fan (show heroes and movies in one place)
   <img src="screenshots/home.jpg" width="270" alt="Home">
   <img src="screenshots/movies.jpg" width="270" alt="Movies">
   <img src="screenshots/heroes.jpg" width="270" alt="Heroes">
+  <img src="screenshots/heroesdetail.jpg" width="270" alt="Heroes">
 </p>

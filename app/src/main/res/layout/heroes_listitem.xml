@@ -5,7 +5,7 @@
 <data>
     <variable
         name="hero"
-        type="non.shahad.heroesfandom.data.local.entities.HeroEntity"
+        type="non.shahad.heroesfandom.data.db.entities.HeroEntity"
         />
 
 </data>

@@ -8,9 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
 import non.shahad.heroesfandom.R
 import non.shahad.heroesfandom.core.ViewTypes
-import non.shahad.heroesfandom.data.local.entities.MovieEntity
 import non.shahad.heroesfandom.databinding.MovieParentItemBinding
-import non.shahad.heroesfandom.ui.movies.models.MainMovies
+import non.shahad.heroesfandom.data.models.MainMovies
 
 class MovieAdapterDelegate(val context : Context) : AdapterDelegate<List<MainMovies>>(){
     private val inflater = LayoutInflater.from(context)

@@ -1,5 +1,6 @@
 package non.shahad.heroesfandom.di.modules
 
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import dagger.Module
 import dagger.Provides
 import non.shahad.heroesfandom.core.Constants
@@ -15,7 +16,9 @@ class NetModule {
 
     @Singleton
     @Provides
-    fun provideOkHttpBuilder(): OkHttpClient.Builder = OkHttpClient().newBuilder()
+    fun provideOkHttpBuilder(): OkHttpClient.Builder = OkHttpClient()
+        .newBuilder()
+        .addNetworkInterceptor(StethoInterceptor())
 
     @Singleton
     @Provides
@@ -32,6 +35,15 @@ class NetModule {
             .client(okHttpClientBuilder.build())
             .build()
             .create(SuperHeroAPI::class.java)
+
+    @Singleton
+    @Provides
+    fun provideFandomAPI(retrofit: Retrofit.Builder,okHttpClientBuilder: OkHttpClient.Builder) : HeroesFandomAPI =
+        retrofit.baseUrl(Constants.NetworkService.FANDOMURL)
+            .client(okHttpClientBuilder.build())
+            .build()
+            .create(HeroesFandomAPI::class.java)
+
 
     @Singleton
     @Provides

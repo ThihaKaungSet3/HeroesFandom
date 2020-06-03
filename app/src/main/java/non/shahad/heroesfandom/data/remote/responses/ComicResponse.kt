@@ -1,13 +1,17 @@
 package non.shahad.heroesfandom.data.remote.responses
 
-import non.shahad.heroesfandom.data.local.entities.ComicEntity
+import com.google.gson.annotations.SerializedName
+import non.shahad.heroesfandom.data.db.entities.ComicEntity
 
 /**
  * Work around
  */
 data class ComicResponse(
+    @SerializedName("category_name")
     val categoryName : String,
-    val page : Int,
-    val list: ArrayList<ComicEntity>
+    @SerializedName("total_page")
+    val totalPage : Int,
+    @SerializedName("posts")
+    val posts: List<ComicEntity>
 ) {
 }

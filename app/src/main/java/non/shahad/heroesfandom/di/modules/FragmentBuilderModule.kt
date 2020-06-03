@@ -2,7 +2,6 @@ package non.shahad.heroesfandom.di.modules
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import non.shahad.heroesfandom.data.local.database.HeroesDatabase
 import non.shahad.heroesfandom.ui.heroes.HeroesFragment
 import non.shahad.heroesfandom.ui.home.HomeFragment
 import non.shahad.heroesfandom.ui.movies.MoviesFragment

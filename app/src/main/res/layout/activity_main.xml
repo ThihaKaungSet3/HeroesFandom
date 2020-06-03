@@ -8,42 +8,32 @@
     tools:context=".ui.MainActivity">
 
 
-<!--    <androidx.fragment.app.FragmentContainerView-->
-<!--        android:id="@+id/navContainer"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:name="androidx.navigation.fragment.NavHostFragment"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        />-->
-
     <FrameLayout
         android:id="@+id/navContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/smoothBottomBar"
+        android:background="@android:color/black"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNav"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <me.ibrahimsn.lib.SmoothBottomBar
-        android:id="@+id/smoothBottomBar"
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
         android:layout_width="match_parent"
+        android:theme="@style/BottomNavigationTheme"
         android:layout_height="?attr/actionBarSize"
-        app:menu="@menu/bottomnavigation_item"
-        app:backgroundColor="@color/darkestGrey"
-        app:itemFontFamily="@font/sans_regular_family"
-        app:iconTint="@color/not_selected_gray_color"
-        app:sideMargins="8dp"
-        app:textSize="12sp"
-        app:iconSize="24dp"
-        app:iconTintActive="@color/colorAccent"
+        android:elevation="8dp"
+        app:itemHorizontalTranslationEnabled="false"
+        app:labelVisibilityMode="labeled"
+        android:background="@color/darkestGrey"
+        app:itemIconTint="@color/bottomnavigation_color_selector"
+        app:itemTextColor="@color/bottomnavigation_color_selector"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
+        app:menu="@menu/bottomnavigation_item"
+        app:layout_constraintStart_toStartOf="parent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

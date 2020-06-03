@@ -6,10 +6,11 @@ import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import non.shahad.heroesfandom.core.Constants
-import non.shahad.heroesfandom.data.local.daos.ComicDao
-import non.shahad.heroesfandom.data.local.daos.MoviesDao
-import non.shahad.heroesfandom.data.local.daos.SuperHeroDao
-import non.shahad.heroesfandom.data.local.database.HeroesDatabase
+import non.shahad.heroesfandom.data.db.daos.ComicDao
+import non.shahad.heroesfandom.data.db.daos.MovieNewsDao
+import non.shahad.heroesfandom.data.db.daos.MoviesDao
+import non.shahad.heroesfandom.data.db.daos.SuperHeroDao
+import non.shahad.heroesfandom.data.db.database.HeroesDatabase
 import non.shahad.heroesfandom.utils.SharedPrefHelper
 import javax.inject.Singleton
 
@@ -38,6 +39,10 @@ class PersistenceModule{
     @Singleton
     @Provides
     fun provideComicDao(db : HeroesDatabase) : ComicDao = db.comicDao()
+
+    @Singleton
+    @Provides
+    fun provideMovieNewsDao(db : HeroesDatabase) : MovieNewsDao = db.movieNewsDao()
 
     @Singleton
     @Provides

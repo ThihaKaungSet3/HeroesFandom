@@ -7,7 +7,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import non.shahad.heroesfandom.R
-import non.shahad.heroesfandom.data.local.entities.HeroEntity
+import non.shahad.heroesfandom.data.db.entities.HeroEntity
 import non.shahad.heroesfandom.databinding.HeroesListitemBinding
 import timber.log.Timber
 

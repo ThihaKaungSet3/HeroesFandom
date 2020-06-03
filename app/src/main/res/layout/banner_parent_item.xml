@@ -1,57 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools">
-<non.shahad.heroesfandom.utils.custom.InterceptRelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+<androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/interceptLayout"
     android:layout_width="match_parent"
     android:background="@color/colorPrimary"
-    android:layout_height="330dp"
-    android:layout_marginBottom="8dp">
+    android:layout_marginBottom="8dp"
+    android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/movieRecycler"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <com.smarteist.autoimageslider.SliderView
+        android:id="@+id/slider"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:sliderAnimationDuration="1300"
+        app:sliderAutoCycleDirection="back_and_forth"
+        app:sliderAutoCycleEnabled="true"
+        app:sliderIndicatorAnimationDuration="600"
+        app:sliderIndicatorGravity="center_horizontal|bottom"
+        app:sliderIndicatorMargin="15dp"
+        app:sliderIndicatorOrientation="horizontal"
+        app:sliderIndicatorPadding="3dp"
+        app:sliderIndicatorRadius="2dp"
+        app:sliderIndicatorSelectedColor="@color/colorPrimaryDark"
+        app:sliderIndicatorUnselectedColor="#FFF"
+        app:sliderScrollTimeInSec="2"
+        app:sliderStartAutoCycle="true"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"
-        android:layout_alignParentBottom="true"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/img_1"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:src="@drawable/ic_circlegreen"
-
-            />
-        <ImageView
-            android:id="@+id/img_2"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:src="@drawable/ic_circlegrey"
-            android:layout_marginLeft="5dp"
-            />
-        <ImageView
-            android:id="@+id/img_3"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:src="@drawable/ic_circlegrey"
-            android:layout_marginLeft="5dp"
-            />
-        <ImageView
-            android:id="@+id/img_4"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:src="@drawable/ic_circlegrey"
-            android:layout_marginLeft="5dp"
-            />
-
-    </LinearLayout>
-
-</non.shahad.heroesfandom.utils.custom.InterceptRelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

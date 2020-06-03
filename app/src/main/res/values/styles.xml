@@ -11,20 +11,8 @@
         <item name="statusBarBackground">@color/colorPrimary</item>
     </style>
 
-    <style name="BottomNavStyle" parent="Widget.MaterialComponents.BottomNavigationView">
-        <item name="background">@color/colorPrimary</item>
-        <item name="itemBackground">@drawable/bottom_navigation_theme</item>
-        <item name="itemIconTint">@color/bottomnavigation_color_selector</item>
-        <item name="itemTextColor">@color/bottomnavigation_color_selector</item>
-        <item name="labelVisibilityMode">unlabeled</item>
-    </style>
-
-    <style name="BottomNavStyle1">
-        <item name="background">@color/colorPrimary</item>
-        <item name="itemBackground">@drawable/bottom_navigation_theme</item>
-        <item name="itemIconTint">@color/bottomnavigation_color_selector</item>
-        <item name="itemTextColor">@color/bottomnavigation_color_selector</item>
-        <item name="labelVisibilityMode">unlabeled</item>
+    <style name="BottomNavigationTheme">
+        <item name="android:fontFamily">@font/sans_regular_family</item>
     </style>
 
     <style name="ToolBarWithNavigationBack">
@@ -41,13 +29,22 @@
         <item name="android:fontFamily">@font/alatsi_family</item>
     </style>
 
-    <style name="RatinBar" parent="Theme.AppCompat">
-        <item name="colorControlNormal">@color/grey_palette</item>
-        <item name="colorControlActivated">@color/gold</item>
+    <style name="SeeMoreTxtStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">16sp</item>
+        <item name="android:text">@string/see_more</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:fontFamily">@font/sans_regular_family</item>
     </style>
+
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Parent_Title_Style">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:fontFamily">@font/sans_black_family</item>
+    </style>
 
     <style name="ProgressBarTheme" parent="Widget.AppCompat.ProgressBar.Horizontal">
         <item name="android:progressTint">@color/colorPrimaryDark</item>

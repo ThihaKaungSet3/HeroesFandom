@@ -9,7 +9,7 @@ import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
 import non.shahad.heroesfandom.R
 import non.shahad.heroesfandom.core.ViewTypes
 import non.shahad.heroesfandom.databinding.ComicParentItemBinding
-import non.shahad.heroesfandom.ui.home.models.Home
+import non.shahad.heroesfandom.data.models.Home
 
 class ComicAdapterDelegate(context: Context) : AdapterDelegate<List<Home>>() {
     private val inflater = LayoutInflater.from(context)

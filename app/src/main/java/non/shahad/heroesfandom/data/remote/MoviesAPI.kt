@@ -8,8 +8,8 @@ import retrofit2.http.Query
 
 interface MoviesAPI {
     @GET("discover/movie")
-    fun getDiscoverMovies(@Query("page") page : Int) : Observable<MovieResponse>
+    suspend fun getDiscoverMovies(@Query("page") page : Int) : MovieResponse
 
     @GET("trending/movie/day")
-    fun getTrendingMovies() : Observable<MovieResponse>
+    suspend fun getTrendingMovies() : MovieResponse
 }

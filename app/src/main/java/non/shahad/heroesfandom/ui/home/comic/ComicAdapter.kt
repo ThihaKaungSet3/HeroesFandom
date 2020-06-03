@@ -6,7 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import non.shahad.heroesfandom.R
 import non.shahad.heroesfandom.databinding.ComicChildItemBinding
-import non.shahad.heroesfandom.data.local.entities.ComicEntity
+import non.shahad.heroesfandom.data.db.entities.ComicEntity
 
 class ComicAdapter(private val comicEntities : List<ComicEntity>) : RecyclerView.Adapter<ComicViewHolder>() {
 

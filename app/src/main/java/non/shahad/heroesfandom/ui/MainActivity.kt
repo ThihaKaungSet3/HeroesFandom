@@ -7,9 +7,6 @@ import android.view.View
 import android.view.WindowManager
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
-import androidx.navigation.NavController
 import com.ncapdevi.fragnav.FragNavController
 import com.ncapdevi.fragnav.FragNavLogger
 import com.ncapdevi.fragnav.FragNavTransactionOptions
@@ -27,34 +24,29 @@ import non.shahad.heroesfandom.ui.heroes.HeroesFragment
 import non.shahad.heroesfandom.ui.home.HomeFragment
 import non.shahad.heroesfandom.ui.library.LibraryFragment
 import non.shahad.heroesfandom.ui.movies.MoviesFragment
-import non.shahad.heroesfandom.utils.extensions.setupWithNavController
 import timber.log.Timber
 import javax.inject.Inject
 
 class MainActivity : BaseActivity(),HasAndroidInjector,
     BaseFragment.FragmentNavigation,
     FragNavController.RootFragmentListener,FragNavController.TransactionListener {
-    private lateinit var viewBinding : ActivityMainBinding
+    private val viewBinding by binding<ActivityMainBinding>(R.layout.activity_main)
 
-    override val numberOfRootFragments: Int= 4
+    override val numberOfRootFragments: Int = 4
 
-    val navController : FragNavController = FragNavController(supportFragmentManager,R.id.navContainer)
-
-    @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
+    val navController: FragNavController =
+        FragNavController(supportFragmentManager, R.id.navContainer)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        changeStatusBarColor(R.color.colorPrimary)
-        viewBinding = DataBindingUtil.setContentView(this,
-            R.layout.activity_main
-        )
+
         AndroidInjection.inject(this)
 
         setUpNavigation()
         setUpBottomNav()
 
-        navController.initialize(Constants.BottomNav.INDEX_HOME,savedInstanceState)
+        navController.initialize(Constants.BottomNav.INDEX_HOME, savedInstanceState)
 
     }
 
@@ -69,8 +61,7 @@ class MainActivity : BaseActivity(),HasAndroidInjector,
     }
 
 
-
-    fun changeStatusBarColor(color : Int){
+    fun changeStatusBarColor(color: Int) {
         val window = window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.statusBarColor = color
@@ -86,37 +77,34 @@ class MainActivity : BaseActivity(),HasAndroidInjector,
 
                 }
             }
-//            defaultTransactionOptions
             fragmentHideStrategy = FragNavController.DETACH_ON_NAVIGATE_HIDE_ON_SWITCH
         }
 
     }
 
-    private fun setUpBottomNav(){
-        viewBinding.smoothBottomBar.setOnItemSelectedListener(object : OnItemSelectedListener{
-            override fun onItemSelect(pos: Int) {
-                when(pos){
-                    Constants.BottomNav.INDEX_HOME -> {
-                        navController.switchTab(Constants.BottomNav.INDEX_HOME)
-                    }
-                    Constants.BottomNav.INDEX_MOVIES -> {
-                        navController.switchTab(Constants.BottomNav.INDEX_MOVIES)
-                    }
-                    Constants.BottomNav.INDEX_HEROES -> {
-                        navController.switchTab(Constants.BottomNav.INDEX_HEROES)
-                    }
-                    Constants.BottomNav.INDEX_LIBRARY -> {
-                        navController.switchTab(Constants.BottomNav.INDEX_LIBRARY)
-                    }
+    private fun setUpBottomNav() {
+        viewBinding.bottomNav.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.actionHome -> {
+                    navController.switchTab(Constants.BottomNav.INDEX_HOME)
+                    return@setOnNavigationItemSelectedListener true
                 }
-
+                R.id.actionMovies -> {
+                    navController.switchTab(Constants.BottomNav.INDEX_MOVIES)
+                    return@setOnNavigationItemSelectedListener true
+                }
+                R.id.actionHeroes -> {
+                    navController.switchTab(Constants.BottomNav.INDEX_HEROES)
+                    return@setOnNavigationItemSelectedListener true
+                }
+                R.id.actionLibrary -> {
+                    navController.switchTab(Constants.BottomNav.INDEX_LIBRARY)
+                    return@setOnNavigationItemSelectedListener true
+                }
             }
-
-        })
-
+            return@setOnNavigationItemSelectedListener false
+        }
     }
-
-    override fun androidInjector(): AndroidInjector<Any> = dispatchingAndroidInjector
 
 
     override fun getRootFragment(index: Int): Fragment {
@@ -138,10 +126,10 @@ class MainActivity : BaseActivity(),HasAndroidInjector,
 
     override fun onTabTransaction(fragment: Fragment?, index: Int) {
         when(index){
-            Constants.BottomNav.INDEX_HOME -> viewBinding.smoothBottomBar.setActiveItem(Constants.BottomNav.INDEX_HOME)
-            Constants.BottomNav.INDEX_MOVIES -> viewBinding.smoothBottomBar.setActiveItem(Constants.BottomNav.INDEX_MOVIES)
-            Constants.BottomNav.INDEX_HEROES -> viewBinding.smoothBottomBar.setActiveItem(Constants.BottomNav.INDEX_HEROES)
-            Constants.BottomNav.INDEX_LIBRARY -> viewBinding.smoothBottomBar.setActiveItem(Constants.BottomNav.INDEX_LIBRARY)
+            Constants.BottomNav.INDEX_HOME -> viewBinding.bottomNav.selectedItemId = R.id.actionHome
+            Constants.BottomNav.INDEX_MOVIES -> viewBinding.bottomNav.selectedItemId = R.id.actionMovies
+            Constants.BottomNav.INDEX_HEROES -> viewBinding.bottomNav.selectedItemId = R.id.actionHeroes
+            Constants.BottomNav.INDEX_LIBRARY -> viewBinding.bottomNav.selectedItemId = R.id.actionLibrary
         }
 
     }
